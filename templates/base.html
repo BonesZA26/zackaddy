@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- =====================================================
+         ZACK ADDY
+         Shared website template
+
+         Design direction:
+         Ink on bone.
+         Serif for the read.
+         Mono for the record.
+         The work comes first.
+    ====================================================== -->
+
+
+    <!-- =====================================================
+         DOCUMENT
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#211D19"
+    >
+
+    <meta
+        name="color-scheme"
+        content="light"
+    >
+
+
+    <!-- =====================================================
+         SEO
+    ====================================================== -->
+
+    <title>
+        {{ page_title | default(
+            "Zack Addy — Essays, Research & a Public Ledger from Inside iLands"
+        ) }}
+    </title>
+
+    <meta
+        name="description"
+        content="{{ meta_description | default(site_description) }}"
+    >
+
+    <meta
+        name="author"
+        content="Zack Addy"
+    >
+
+
+    {% if canonical_url %}
+
+        <link
+            rel="canonical"
+            href="{{ canonical_url }}"
+        >
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         ROBOTS
+    ====================================================== -->
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+
+    <!-- =====================================================
+         OPEN GRAPH
+
+         Individual essay templates can override these blocks.
+    ====================================================== -->
+
+    <meta
+        property="og:site_name"
+        content="Zack Addy"
+    >
+
+    <meta
+        property="og:type"
+        content="{% block og_type %}website{% endblock %}"
+    >
+
+    <meta
+        property="og:title"
+        content="{% block og_title %}{{ page_title | default('Zack Addy') }}{% endblock %}"
+    >
+
+    <meta
+        property="og:description"
+        content="{% block og_description %}{{ meta_description | default(site_description) }}{% endblock %}"
+    >
+
+
+    {% if canonical_url %}
+
+        <meta
+            property="og:url"
+            content="{{ canonical_url }}"
+        >
+
+    {% endif %}
+
+
+    <!--
+        Zack's approved OG/social image can be added here
+        once the asset exists.
+
+        Do not invent one.
+    -->
+
+    {% block social_image %}{% endblock %}
+
+
+    <!-- =====================================================
+         FAVICONS
+
+         Existing files:
+
+         logo-16.png / webp
+         logo-32.png / webp
+         logo-64.png / webp
+         logo-96.png / webp
+         logo-256.png / webp
+         logo-512.png / webp
+    ====================================================== -->
+
+    <link
+        rel="icon"
+        type="image/webp"
+        sizes="32x32"
+        href="{{ url_for(
+            'static',
+            filename='imgs/logos/logo-32.webp'
+        ) }}"
+    >
+
+    <link
+        rel="alternate icon"
+        type="image/png"
+        sizes="32x32"
+        href="{{ url_for(
+            'static',
+            filename='imgs/logos/logo-32.png'
+        ) }}"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        sizes="256x256"
+        href="{{ url_for(
+            'static',
+            filename='imgs/logos/logo-256.png'
+        ) }}"
+    >
+
+
+    <!-- =====================================================
+         STRUCTURED DATA
+
+         Basic site identity only.
+
+         Individual essay pages can add CreativeWork data
+         through the structured_data block.
+    ====================================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Zack Addy",
+        "url": "{{ site_url }}",
+        "description": {{ site_description | tojson }}
+    }
+    </script>
+
+
+    {% block structured_data %}{% endblock %}
+
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
+   <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/base.css') }}"
+>
+
+{% block page_css %}{% endblock %}
+
+
+    <!-- =====================================================
+         PAGE-SPECIFIC HEAD CONTENT
+    ====================================================== -->
+
+    {% block head %}{% endblock %}
+
+</head>
+
+
+<body class="{% block body_class %}{% endblock %}">
+
+
+    <!-- =====================================================
+         SKIP NAVIGATION
+    ====================================================== -->
+
+    <a
+        class="skip-link"
+        href="#main-content"
+    >
+        Skip to main content
+    </a>
+
+
+    <!-- =====================================================
+         SITE HEADER
+    ====================================================== -->
+
+    <header class="site-header">
+
+        <div class="container header-inner">
+
+
+            <!-- =================================================
+                 BRAND
+
+                 WebP preferred.
+                 PNG fallback.
+            ================================================== -->
+
+            <a
+                class="brand"
+                href="{{ url_for('home') }}"
+                aria-label="Zack Addy — home"
+            >
+
+                <picture class="brand-logo">
+
+                    <!-- WebP -->
+
+                    <source
+                        type="image/webp"
+                        srcset="
+                            {{ url_for(
+                                'static',
+                                filename='imgs/logos/logo-64.webp'
+                            ) }} 64w,
+
+                            {{ url_for(
+                                'static',
+                                filename='imgs/logos/logo-96.webp'
+                            ) }} 96w,
+
+                            {{ url_for(
+                                'static',
+                                filename='imgs/logos/logo-256.webp'
+                            ) }} 256w
+                        "
+                        sizes="48px"
+                    >
+
+
+                    <!-- PNG fallback -->
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='imgs/logos/logo-96.png'
+                        ) }}"
+
+                        srcset="
+                            {{ url_for(
+                                'static',
+                                filename='imgs/logos/logo-64.png'
+                            ) }} 64w,
+
+                            {{ url_for(
+                                'static',
+                                filename='imgs/logos/logo-96.png'
+                            ) }} 96w,
+
+                            {{ url_for(
+                                'static',
+                                filename='imgs/logos/logo-256.png'
+                            ) }} 256w
+                        "
+
+                        sizes="48px"
+
+                        width="48"
+                        height="48"
+
+                        alt="Zack Addy"
+
+                        decoding="async"
+                    >
+
+                </picture>
+
+            </a>
+
+
+            <!-- =================================================
+                 MOBILE MENU BUTTON
+            ================================================== -->
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="main-navigation"
+            >
+
+                <span class="menu-toggle-label">
+                    Menu
+                </span>
+
+            </button>
+
+
+            <!-- =================================================
+                 MAIN NAVIGATION
+            ================================================== -->
+
+            <nav
+                id="main-navigation"
+                class="main-navigation"
+                aria-label="Main navigation"
+            >
+
+
+                <!-- WORK -->
+
+                <a
+                    href="{{ url_for('work') }}"
+
+                    {% if request.endpoint in ['work', 'essay'] %}
+                        aria-current="page"
+                    {% endif %}
+                >
+                    Work
+                </a>
+
+
+                <!-- DISPATCHES -->
+
+                <a href="{{ url_for('dispatches') }}" {% if request.endpoint == 'dispatches' %}aria-current="page"{% endif %}>
+                    Dispatches
+                </a>
+
+
+                <!-- RECEIPTS -->
+
+                <a href="{{ url_for('receipts') }}" {% if request.endpoint == 'receipts' %}aria-current="page"{% endif %}>
+                    Receipts
+                </a>
+
+
+                <!-- STUDY -->
+
+                <a
+                    href="{{ url_for('study') }}"
+
+                    {% if request.endpoint == 'study' %}
+                        aria-current="page"
+                    {% endif %}
+                >
+                    Study
+                </a>
+
+
+                <!-- LEDGER -->
+
+                <a
+                    href="{{ url_for('ledger') }}"
+
+                    {% if request.endpoint == 'ledger' %}
+                        aria-current="page"
+                    {% endif %}
+                >
+                    Ledger
+                </a>
+
+
+                <!-- SERVICES -->
+
+                <a
+                    href="{{ url_for('services') }}"
+
+                    {% if request.endpoint == 'services' %}
+                        aria-current="page"
+                    {% endif %}
+                >
+                    Services
+                </a>
+
+
+                <!-- CONTACT -->
+
+                <a
+                    class="nav-contact-link"
+                    href="{{ url_for('contact') }}"
+
+                    {% if request.endpoint == 'contact' %}
+                        aria-current="page"
+                    {% endif %}
+                >
+                    Contact
+                </a>
+
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+
+         Every page inserts its own content here.
+    ====================================================== -->
+
+    <main
+        id="main-content"
+        tabindex="-1"
+    >
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+
+    <!-- =====================================================
+         SITE FOOTER
+    ====================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container footer-main">
+
+
+            <!-- =================================================
+                 FOOTER IDENTITY
+            ================================================== -->
+
+            <div class="footer-identity">
+
+
+                <a
+                    class="footer-logo-link"
+                    href="{{ url_for('home') }}"
+                    aria-label="Zack Addy — home"
+                >
+
+                    <picture class="footer-logo">
+
+
+                        <!-- WebP -->
+
+                        <source
+                            type="image/webp"
+                            srcset="
+                                {{ url_for(
+                                    'static',
+                                    filename='imgs/logos/logo-64.webp'
+                                ) }} 64w,
+
+                                {{ url_for(
+                                    'static',
+                                    filename='imgs/logos/logo-96.webp'
+                                ) }} 96w
+                            "
+                            sizes="44px"
+                        >
+
+
+                        <!-- PNG fallback -->
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='imgs/logos/logo-64.png'
+                            ) }}"
+
+                            srcset="
+                                {{ url_for(
+                                    'static',
+                                    filename='imgs/logos/logo-64.png'
+                                ) }} 64w,
+
+                                {{ url_for(
+                                    'static',
+                                    filename='imgs/logos/logo-96.png'
+                                ) }} 96w
+                            "
+
+                            sizes="44px"
+
+                            width="44"
+                            height="44"
+
+                            alt=""
+
+                            loading="lazy"
+                            decoding="async"
+                        >
+
+                    </picture>
+
+                </a>
+
+
+                <div class="footer-name-group">
+
+                    <p class="footer-name">
+                        Zack Addy
+                    </p>
+
+                    <p class="footer-description">
+                        Essays · Dispatches · Receipts · Ledger
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FOOTER NAVIGATION
+            ================================================== -->
+
+            <nav
+                class="footer-navigation"
+                aria-label="Footer navigation"
+            >
+
+                <a href="{{ url_for('work') }}">
+                    Work
+                </a>
+
+                <a href="{{ url_for('dispatches') }}">
+                    Dispatches
+                </a>
+
+                <a href="{{ url_for('receipts') }}">
+                    Receipts
+                </a>
+
+                <a href="{{ url_for('study') }}">
+                    Study
+                </a>
+
+                <a href="{{ url_for('ledger') }}">
+                    Ledger
+                </a>
+
+                <a href="{{ url_for('services') }}">
+                    Services
+                </a>
+
+                <a href="{{ url_for('contact') }}">
+                    Contact
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="container footer-direct-routes" aria-label="Direct contact routes">
+            <div>
+                <span>Email</span>
+                <a href="mailto:{{ contact_email }}?subject=Commission%20question">{{ contact_email }}</a>
+            </div>
+            <div>
+                <span>iLands profile</span>
+                <a href="{{ ilands_profile_url }}" rel="me noopener noreferrer">View Zack on iLands</a>
+            </div>
+            <div>
+                <span>Writing &amp; Analysis</span>
+                <a href="{{ ilands_commission_url }}" rel="noopener noreferrer">Open commission listing</a>
+            </div>
+        </div>
+
+
+        <!-- =================================================
+             CORRECTION PRINCIPLE
+
+             Zack's final wording.
+        ================================================== -->
+
+        <div class="container footer-record">
+
+            <p class="correction-principle">
+                Corrections to this site are filed visibly, not silently.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             LEGAL / RECORD
+        ================================================== -->
+
+        <div class="container footer-bottom">
+
+            <p class="footer-copyright">
+                © <span id="current-year">2026</span> Zack Addy
+            </p>
+
+
+            <p class="footer-privacy">
+                No tracking · No cookies at launch
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+
+         Deferred so HTML parsing is never blocked.
+    ====================================================== -->
+
+    <script
+        src="{{ url_for(
+            'static',
+            filename='js/main.js'
+        ) }}"
+        defer
+    ></script>
+
+
+    <!-- =====================================================
+         PAGE-SPECIFIC JAVASCRIPT
+    ====================================================== -->
+
+    {% block scripts %}{% endblock %}
+
+
+</body>
+
+</html>

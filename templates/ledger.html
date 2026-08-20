@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ledger.css') }}">
+{% endblock %}
+
+{% block body_class %}record-page ledger-page{% endblock %}
+
+{% block content %}
+<section class="record-hero" aria-labelledby="ledger-title">
+  <div class="container record-hero__grid">
+    <div>
+      <p class="record-kicker">Evidence / Receipts / Corrections</p>
+      <h1 id="ledger-title">The ledger.</h1>
+    </div>
+    <div class="record-hero__panel">
+      <p class="record-hero__statement">If I said I did it, promised it, paid it, published it or refused it, the record belongs here.</p>
+      <p class="record-hero__note">Corrections stay visible. Superseded records stay visible. A receipt stays attached where one exists.</p>
+      <dl class="record-meta">
+        <div><dt>Published</dt><dd>{{ records | length }} record{% if records | length != 1 %}s{% endif %}</dd></div>
+        <div><dt>Change rule</dt><dd>Addition, never silent replacement</dd></div>
+        <div><dt>Inspection</dt><dd>Claim, status, receipt and history</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-strip" aria-label="Ledger principles">
+  <div class="container record-strip__grid">
+    <div class="record-strip__item"><span>01 / Claim</span><strong>Say what happened</strong></div>
+    <div class="record-strip__item"><span>02 / Receipt</span><strong>Attach what proves it</strong></div>
+    <div class="record-strip__item"><span>03 / Status</span><strong>Show where it stands</strong></div>
+    <div class="record-strip__item"><span>04 / Correction</span><strong>Keep what came before</strong></div>
+  </div>
+</section>
+
+<section class="record-section record-section--accent" aria-labelledby="ledger-rule">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">01 / Ledger rule</span>
+      <h2 id="ledger-rule">Changed does not mean erased.</h2>
+    </header>
+    <div class="record-content">
+      <blockquote class="record-quote">A correction adds to the record. It does not rewrite its past.</blockquote>
+      <p class="record-copy">The original claim remains inspectable beside the correction, with the date and reason for the change.</p>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--compact" aria-labelledby="status-key">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">02 / Status key</span>
+      <h2 id="status-key">Read the state.</h2>
+    </header>
+    <div class="record-content">
+      <div class="record-legend">
+        <div><span class="status-chip status-filed">Filed</span><span>Promised or recorded.</span></div>
+        <div><span class="status-chip status-in-flight">In flight</span><span>Started, not yet landed.</span></div>
+        <div><span class="status-chip status-landed">Landed</span><span>Done and receipted.</span></div>
+        <div><span class="status-chip status-corrected">Corrected</span><span>Visible correction attached.</span></div>
+        <div><span class="status-chip status-superseded">Superseded</span><span>Earlier record remains visible.</span></div>
+        <div><span class="status-chip status-declined">Declined</span><span>A refusal kept on the line.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--colour" aria-labelledby="public-register">
+  <div class="container">
+    <div class="record-layout">
+      <header class="record-sidebar">
+        <span class="record-index">03 / Public register</span>
+        <h2 id="public-register">Records.</h2>
+      </header>
+      <div class="record-content">
+        <p class="record-lead">Open a record to inspect its claim, receipt and correction history.</p>
+      </div>
+    </div>
+
+    {% if records %}
+    <div class="record-list">
+      {% for record in records %}
+      {% set status_slug = record.status | lower | replace(' ', '-') %}
+      <article class="record-row" id="{{ record.id }}">
+        <div class="record-row__meta">
+          <time datetime="{{ record.date }}">{{ record.date }}</time>
+          <span>{{ record.type }}</span>
+          <span>{{ record.id }}</span>
+        </div>
+        <div>
+          <h3>{{ record.summary }}</h3>
+          {% if record.claim %}<p>{{ record.claim }}</p>{% endif %}
+          {% if record.corrects %}<p>This additive record corrects <a href="#{{ record.corrects }}">{{ record.corrects }}</a>.</p>{% endif %}
+          {% if record.reason %}<p><strong>Reason:</strong> {{ record.reason }}</p>{% endif %}
+        </div>
+        <span class="status-chip status-{{ status_slug }}">{{ record.status }}</span>
+
+        {% if record.receipt or record.source %}
+        <div class="record-row__details">
+          {% if record.receipt %}
+          <div>
+            <strong>Receipt</strong>
+            {% if record.receipt.type %}<p>{{ record.receipt.type }}</p>{% endif %}
+            {% if record.receipt.reference %}<p>Ref: {{ record.receipt.reference }}</p>{% endif %}
+            {% if record.receipt.amount %}<p>Amount: {{ record.receipt.amount }}</p>{% endif %}
+            {% if record.receipt.content_id %}<p>Content ID: {{ record.receipt.content_id }}</p>{% endif %}
+            {% if record.receipt.url %}<p><a href="{{ record.receipt.url }}" rel="noopener noreferrer">Open receipt</a></p>{% endif %}
+          </div>
+          {% endif %}
+          {% if record.source %}
+          <div>
+            <strong>Source</strong>
+            {% if record.source.url %}<p><a href="{{ record.source.url }}" rel="noopener noreferrer">{{ record.source.label | default("Open source") }}</a></p>{% else %}<p>{{ record.source.label }}</p>{% endif %}
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="record-empty">
+      <span class="record-empty__label">Awaiting published data</span>
+      <div>
+        <h3>The register is ready for its first record.</h3>
+        <p>Published ledger entries will appear here and on the homepage automatically. Drafts remain private; published records remain immutable.</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="record-section record-section--deep" aria-labelledby="ledger-schema">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">04 / Record schema</span>
+      <h2 id="ledger-schema">What every row carries.</h2>
+    </header>
+    <div class="record-content">
+      <dl class="record-data">
+        <div><dt>Date</dt><dd>When the recorded event happened</dd></div>
+        <div><dt>Type</dt><dd>Work, payment, study, correction or refusal</dd></div>
+        <div><dt>Claim</dt><dd>The public statement being filed</dd></div>
+        <div><dt>Receipt</dt><dd>Attached where one exists and may be published</dd></div>
+        <div><dt>Status</dt><dd>The record’s current visible state</dd></div>
+        <div><dt>History</dt><dd>Linked additions and corrections</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-cta">
+  <div class="container record-cta__grid">
+    <div><h2>Read the work around the record.</h2><p>The ledger documents the line; the essays explain the thinking beside it.</p></div>
+    <div class="record-actions">
+      <a class="button button-primary" href="{{ url_for('work') }}">Read the work</a>
+      <a class="button button-secondary" href="{{ url_for('study') }}">Open the study</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

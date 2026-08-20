@@ -1,0 +1,1021 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ essay.title if essay else "Essay" }} — Zack Addy
+{% endblock %}
+
+{% block page_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/essay.css') }}"
+>
+{% endblock %}
+
+
+{% block body_class %}essay-page{% endblock %}
+
+
+{% block og_type %}article{% endblock %}
+
+
+{% block og_title %}
+{{ essay.title }} — Zack Addy
+{% endblock %}
+
+
+{% block og_description %}
+{{ essay.description | default(meta_description) }}
+{% endblock %}
+
+
+{% block structured_data %}
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "headline": {{ essay.title | tojson }},
+    "description": {{ essay.description | default(meta_description) | tojson }},
+    "author": {
+        "@type": "Person",
+        "name": "Zack Addy",
+        "url": "{{ site_url }}"
+    },
+    "url": "{{ canonical_url }}"{% if essay.published %},
+    "datePublished": {{ essay.published | tojson }}{% endif %}{% if essay.updated %},
+    "dateModified": {{ essay.updated | tojson }}{% endif %}
+}
+</script>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =========================================================
+     INDIVIDUAL ESSAY
+
+     Zack's specification:
+     - Full text
+     - Publish date
+     - Original iLands content id where relevant
+     - Series/topic information
+     - Sources where supplied
+     - Corrections remain visible
+     - Essays are the primary SEO surface
+
+     This template never invents provenance.
+========================================================= -->
+
+
+<article
+    class="essay"
+    itemscope
+    itemtype="https://schema.org/CreativeWork"
+>
+
+
+    <!-- =====================================================
+         01. ESSAY HEADER
+    ====================================================== -->
+
+    <header class="essay-header essay-hero">
+
+        <div class="container">
+
+            <div class="essay-header-grid essay-hero-inner">
+
+
+                <!-- =========================================
+                     TITLE / SERIES
+                ========================================== -->
+
+                <div class="essay-title-group essay-heading">
+
+
+                    {% if essay.series %}
+
+                        <p class="eyebrow">
+                            {{ essay.series }}
+                        </p>
+
+                    {% else %}
+
+                        <p class="eyebrow">
+                            Essay
+                        </p>
+
+                    {% endif %}
+
+
+                    <h1 itemprop="headline">
+                        {{ essay.title }}
+                    </h1>
+
+
+                    {% if essay.description %}
+
+                        <p
+                            class="essay-deck essay-subtitle lead"
+                            itemprop="description"
+                        >
+                            {{ essay.description }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- =========================================
+                     PUBLICATION RECORD
+                ========================================== -->
+
+                <aside
+                    class="essay-record essay-record-panel"
+                    aria-label="Publication record"
+                >
+
+                    <p class="record-label">
+                        Publication record
+                    </p>
+
+
+                    <dl class="essay-record-list">
+
+
+                        {% if essay.published %}
+
+                            <div>
+
+                                <dt>
+                                    Published
+                                </dt>
+
+                                <dd>
+
+                                    <time
+                                        datetime="{{ essay.published }}"
+                                        itemprop="datePublished"
+                                    >
+                                        {{ essay.published }}
+                                    </time>
+
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+
+                        {% if essay.updated %}
+
+                            <div>
+
+                                <dt>
+                                    Updated
+                                </dt>
+
+                                <dd>
+
+                                    <time
+                                        datetime="{{ essay.updated }}"
+                                        itemprop="dateModified"
+                                    >
+                                        {{ essay.updated }}
+                                    </time>
+
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+
+                        {% if essay.content_id %}
+
+                            <div>
+
+                                <dt>
+                                    iLands ID
+                                </dt>
+
+                                <dd>
+                                    {{ essay.content_id }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+
+                        {% if essay.series %}
+
+                            <div>
+
+                                <dt>
+                                    Series
+                                </dt>
+
+                                <dd>
+                                    {{ essay.series }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+
+                        {% if essay.record_id %}
+
+                            <div>
+
+                                <dt>
+                                    Record
+                                </dt>
+
+                                <dd>
+                                    {{ essay.record_id }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </dl>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         02. TOPICS / CLASSIFICATION
+    ====================================================== -->
+
+    {% if essay.topics or essay.topic %}
+
+        <section
+            class="essay-classification"
+            aria-label="Essay topics"
+        >
+
+            <div class="container">
+
+                <div class="essay-classification-inner">
+
+                    <span class="record-label">
+                        Filed under
+                    </span>
+
+
+                    <ul class="essay-topic-list">
+
+
+                        {% if essay.topics %}
+
+                            {% for topic in essay.topics %}
+
+                                <li>
+                                    {{ topic | replace("-", " ") }}
+                                </li>
+
+                            {% endfor %}
+
+
+                        {% elif essay.topic %}
+
+                            <li>
+                                {{ essay.topic | replace("-", " ") }}
+                            </li>
+
+                        {% endif %}
+
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         03. CORRECTION NOTICE
+
+         Important:
+         corrections are not silently folded into the essay.
+
+         Expected JSON structure:
+
+         "corrections": [
+             {
+                 "date": "2026-08-18",
+                 "summary": "...",
+                 "ledger_id": "ZA-..."
+             }
+         ]
+    ====================================================== -->
+
+    {% if essay.corrections %}
+
+        <section
+            class="essay-corrections"
+            aria-labelledby="essay-corrections-heading"
+        >
+
+            <div class="container">
+
+                <div class="correction-notice">
+
+
+                    <div class="correction-notice-heading">
+
+                        <p class="eyebrow">
+                            Correction record
+                        </p>
+
+                        <h2 id="essay-corrections-heading">
+                            This piece has a visible correction history.
+                        </h2>
+
+                    </div>
+
+
+                    <div class="correction-list">
+
+                        {% for correction in essay.corrections %}
+
+                            <article class="correction-entry">
+
+
+                                <div class="correction-meta">
+
+                                    {% if correction.date %}
+
+                                        <time datetime="{{ correction.date }}">
+                                            {{ correction.date }}
+                                        </time>
+
+                                    {% endif %}
+
+
+                                    <span class="status-chip status-corrected">
+                                        Corrected
+                                    </span>
+
+                                </div>
+
+
+                                {% if correction.summary %}
+
+                                    <p>
+                                        {{ correction.summary }}
+                                    </p>
+
+                                {% endif %}
+
+
+                                {% if correction.ledger_id %}
+
+                                    <p class="correction-ledger-reference">
+
+                                        <span>
+                                            Ledger record
+                                        </span>
+
+                                        <span>
+                                            {{ correction.ledger_id }}
+                                        </span>
+
+                                    </p>
+
+                                {% endif %}
+
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         04. ESSAY BODY
+
+         Preferred JSON structure:
+
+         "body": [
+             {
+                 "type": "paragraph",
+                 "text": "..."
+             },
+             {
+                 "type": "heading",
+                 "text": "..."
+             },
+             {
+                 "type": "quote",
+                 "text": "...",
+                 "attribution": "..."
+             }
+         ]
+
+         This gives us controlled semantic HTML rather than
+         injecting arbitrary HTML from JSON.
+    ====================================================== -->
+
+    <section class="essay-body-section essay-body">
+
+        <div class="container">
+
+            <div
+                class="essay-reading-column essay-content"
+                itemprop="text"
+            >
+
+
+                {% if essay.body %}
+
+
+                    {% for block in essay.body %}
+
+
+                        <!-- =================================
+                             PARAGRAPH
+                        ================================== -->
+
+                        {% if block.type == "paragraph" %}
+
+                            <p>
+                                {{ block.text }}
+                            </p>
+
+
+
+                        <!-- =================================
+                             SECTION HEADING
+                        ================================== -->
+
+                        {% elif block.type == "heading" %}
+
+                            <h2>
+                                {{ block.text }}
+                            </h2>
+
+
+
+                        <!-- =================================
+                             SUBHEADING
+                        ================================== -->
+
+                        {% elif block.type == "subheading" %}
+
+                            <h3>
+                                {{ block.text }}
+                            </h3>
+
+
+
+                        <!-- =================================
+                             QUOTE
+                        ================================== -->
+
+                        {% elif block.type == "quote" %}
+
+                            <blockquote>
+
+                                <p>
+                                    {{ block.text }}
+                                </p>
+
+
+                                {% if block.attribution %}
+
+                                    <footer>
+                                        {{ block.attribution }}
+                                    </footer>
+
+                                {% endif %}
+
+                            </blockquote>
+
+
+
+                        <!-- =================================
+                             UNORDERED LIST
+                        ================================== -->
+
+                        {% elif block.type == "list" %}
+
+                            <ul>
+
+                                {% for item in block.items %}
+
+                                    <li>
+                                        {{ item }}
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+
+
+                        <!-- =================================
+                             ORDERED LIST
+                        ================================== -->
+
+                        {% elif block.type == "ordered_list" %}
+
+                            <ol>
+
+                                {% for item in block.items %}
+
+                                    <li>
+                                        {{ item }}
+                                    </li>
+
+                                {% endfor %}
+
+                            </ol>
+
+
+
+                        <!-- =================================
+                             FIELD NOTE
+
+                             Useful for Zack's annotations,
+                             methodological notes or asides.
+                        ================================== -->
+
+                        {% elif block.type == "note" %}
+
+                            <aside class="essay-field-note">
+
+                                {% if block.label %}
+
+                                    <p class="record-label">
+                                        {{ block.label }}
+                                    </p>
+
+                                {% endif %}
+
+                                <p>
+                                    {{ block.text }}
+                                </p>
+
+                            </aside>
+
+
+
+                        <!-- =================================
+                             LEDGER / TECHNICAL ENTRY
+                        ================================== -->
+
+                        {% elif block.type == "record" %}
+
+                            <div class="essay-inline-record">
+
+                                {% if block.label %}
+
+                                    <span class="record-label">
+                                        {{ block.label }}
+                                    </span>
+
+                                {% endif %}
+
+                                <p>
+                                    {{ block.text }}
+                                </p>
+
+                            </div>
+
+
+
+                        <!-- =================================
+                             DIVIDER
+
+                             Semantic thematic break.
+                        ================================== -->
+
+                        {% elif block.type == "divider" %}
+
+                            <hr>
+
+
+
+                        <!-- =================================
+                             FALLBACK
+
+                             Unknown block types are deliberately
+                             not rendered as arbitrary HTML.
+                        ================================== -->
+
+                        {% endif %}
+
+
+                    {% endfor %}
+
+
+
+                {% else %}
+
+
+                    <!-- =====================================
+                         DEVELOPMENT STATE
+
+                         We do not invent Zack's essay.
+                    ====================================== -->
+
+                    <div class="essay-development-state">
+
+                        <p class="record-label">
+                            Essay text awaiting import
+                        </p>
+
+                        <p>
+                            The full text for this publication
+                            has not yet been added to the local
+                            essay record.
+                        </p>
+
+                        <p class="metadata">
+                            No replacement or generated essay
+                            copy is displayed in its place.
+                        </p>
+
+                    </div>
+
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         05. SOURCES / REFERENCES
+
+         Expected structure:
+
+         "sources": [
+             {
+                 "label": "...",
+                 "url": "...",
+                 "note": "..."
+             }
+         ]
+
+         Only shown where supplied.
+    ====================================================== -->
+
+    {% if essay.sources %}
+
+        <section
+            class="section essay-sources-section"
+            aria-labelledby="essay-sources-heading"
+        >
+
+            <div class="container">
+
+                <div class="essay-supporting-grid">
+
+
+                    <header>
+
+                        <p class="eyebrow">
+                            Sources
+                        </p>
+
+                        <h2 id="essay-sources-heading">
+                            What this piece points to.
+                        </h2>
+
+                    </header>
+
+
+                    <ol class="source-list">
+
+                        {% for source in essay.sources %}
+
+                            <li class="source-entry">
+
+
+                                <span class="source-number">
+                                    {{ "%02d" | format(loop.index) }}
+                                </span>
+
+
+                                <div>
+
+
+                                    {% if source.url %}
+
+                                        <a
+                                            href="{{ source.url }}"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {{ source.label }}
+                                        </a>
+
+
+                                    {% else %}
+
+                                        <span class="source-label">
+                                            {{ source.label }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if source.note %}
+
+                                        <p class="source-note">
+                                            {{ source.note }}
+                                        </p>
+
+                                    {% endif %}
+
+
+                                </div>
+
+                            </li>
+
+                        {% endfor %}
+
+                    </ol>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         06. PROVENANCE
+
+         This is separate from Sources.
+
+         Sources = what the essay cites.
+         Provenance = where this essay itself came from.
+    ====================================================== -->
+
+    <section
+        class="section essay-provenance-section"
+        aria-labelledby="provenance-heading"
+    >
+
+        <div class="container">
+
+            <div class="essay-provenance">
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        Provenance
+                    </p>
+
+                    <h2 id="provenance-heading">
+                        The record stays attached.
+                    </h2>
+
+                </div>
+
+
+                <dl class="provenance-list">
+
+
+                    <div>
+
+                        <dt>
+                            Author
+                        </dt>
+
+                        <dd>
+                            Zack Addy
+                        </dd>
+
+                    </div>
+
+
+
+                    {% if essay.published %}
+
+                        <div>
+
+                            <dt>
+                                Published
+                            </dt>
+
+                            <dd>
+
+                                <time datetime="{{ essay.published }}">
+                                    {{ essay.published }}
+                                </time>
+
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    {% if essay.content_id %}
+
+                        <div>
+
+                            <dt>
+                                Original iLands content id
+                            </dt>
+
+                            <dd>
+                                {{ essay.content_id }}
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    {% if essay.record_id %}
+
+                        <div>
+
+                            <dt>
+                                Ledger record
+                            </dt>
+
+                            <dd>
+                                {{ essay.record_id }}
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <div>
+
+                        <dt>
+                            Correction policy
+                        </dt>
+
+                        <dd>
+                            Filed visibly, not silently.
+                        </dd>
+
+                    </div>
+
+
+                </dl>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         07. RELATED LEDGER RECORD
+
+         Only displayed if the essay actually supplies one.
+    ====================================================== -->
+
+    {% if essay.record_id %}
+
+        <section class="essay-ledger-route">
+
+            <div class="container">
+
+                <div class="ledger-route-record">
+
+
+                    <div>
+
+                        <p class="record-label">
+                            Evidence record
+                        </p>
+
+                        <p class="ledger-route-id">
+                            {{ essay.record_id }}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <p>
+                            This publication has a corresponding
+                            record in the public ledger.
+                        </p>
+
+                        <a href="{{ url_for('ledger') }}">
+                            Open the ledger
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         08. ESSAY FOOTER
+    ====================================================== -->
+
+    <footer class="essay-footer">
+
+        <div class="container">
+
+            <div class="essay-footer-inner">
+
+
+                <div>
+
+                    <p class="record-label">
+                        End of record
+                    </p>
+
+                    <p class="essay-footer-title">
+                        {{ essay.title }}
+                    </p>
+
+                </div>
+
+
+                <div class="essay-footer-routes">
+
+                    <a
+                        class="button button-secondary"
+                        href="{{ url_for('work') }}"
+                    >
+                        All work
+                    </a>
+
+                    <a
+                        class="section-route"
+                        href="{{ url_for('ledger') }}"
+                    >
+                        The ledger
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</article>
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'admin/base.html' %}{% block title %}{{ 'Edit' if entry else 'New' }} Bones entry{% endblock %}{% block content %}
+<section class="admin-panel"><p class="eyebrow">Bones of the New World</p><h1>{{ 'Edit' if entry else 'New' }} Bones entry.</h1><p>Use a blank line between paragraphs. The page link is created from the slug.</p>
+<form method="post" class="admin-grid"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label class="admin-wide">Title<input name="title" required maxlength="200" value="{{ entry.title if entry else '' }}"></label>
+<label>Page slug<input name="slug" required maxlength="160" placeholder="bones-01" value="{{ entry.slug if entry else '' }}"></label>
+<label>Publication date<input type="date" name="published_date" required value="{{ entry.published_date if entry else '' }}"></label>
+<label>Series<input name="series" required maxlength="160" value="{{ entry.series if entry else 'Bones of the New World' }}"></label>
+<label>Series order<input type="number" name="series_order" min="0" step="1" value="{{ entry.series_order if entry else 0 }}"></label>
+<label>Public / content ID<input name="content_id" maxlength="200" value="{{ entry.content_id if entry and entry.content_id else '' }}"></label>
+<label>Original or external link<input type="url" name="external_url" maxlength="1000" value="{{ entry.external_url if entry and entry.external_url else '' }}"></label>
+<label class="admin-wide">Summary / excerpt<textarea name="excerpt" maxlength="500">{{ entry.excerpt if entry and entry.excerpt else '' }}</textarea></label>
+<label class="admin-wide">Body / content<textarea name="body" required maxlength="50000" rows="22">{{ entry.body if entry else '' }}</textarea></label>
+{% if not entry %}<label class="admin-check"><input type="checkbox" name="publish" value="yes"> Publish immediately</label>{% endif %}
+<div class="admin-wide"><button class="button button-primary" type="submit">{{ 'Save changes' if entry else 'Create entry' }}</button> <a class="button button-secondary" href="{{ url_for('admin_dashboard') }}">Cancel</a></div>
+</form></section>{% endblock %}

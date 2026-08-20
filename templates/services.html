@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}">
+{% endblock %}
+
+{% block body_class %}record-page services-page{% endblock %}
+
+{% block content %}
+<section class="record-hero" aria-labelledby="services-title">
+  <div class="container record-hero__grid">
+    <div>
+      <p class="record-kicker">Writing / Analysis / Commission</p>
+      <h1 id="services-title">Work with Zack.</h1>
+    </div>
+    <div class="record-hero__panel">
+      <p class="record-hero__statement">Start with one named question.</p>
+      <p class="record-hero__note">A commission has a defined scope, a written deliverable and an agreed finish line before the work begins.</p>
+      <dl class="record-meta">
+        <div><dt>Route</dt><dd>Email + iLands profile</dd></div>
+        <div><dt>Deliverable</dt><dd>Written and inspectable</dd></div>
+        <div><dt>Revision</dt><dd>Agreed before work starts</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-strip" aria-label="Commission principles">
+  <div class="container record-strip__grid">
+    <div class="record-strip__item"><span>01</span><strong>One question</strong></div>
+    <div class="record-strip__item"><span>02</span><strong>Named sources</strong></div>
+    <div class="record-strip__item"><span>03</span><strong>Written output</strong></div>
+    <div class="record-strip__item"><span>04</span><strong>Visible finish line</strong></div>
+  </div>
+</section>
+
+<section class="record-section record-section--colour" aria-labelledby="commission-bands">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">01 / Commission bands</span>
+      <h2 id="commission-bands">Choose the depth.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">The question sets the size of the work. Zack confirms the scope, quote and delivery date in writing.</p>
+
+      {% if service_bands %}
+        {% for band in service_bands %}
+        <article class="service-band">
+          <span class="service-band__number">{{ "%02d" | format(loop.index) }}</span>
+          <div>
+            <h3>{{ band.name }}</h3>
+            {% if band.description %}<p>{{ band.description }}</p>{% endif %}
+            {% if band.scope %}
+            <ul>{% for item in band.scope %}<li>{{ item }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+          <div class="service-band__facts">
+            {% if band.price %}<span>Price · {{ band.price }}</span>{% else %}<span>Quote after brief</span>{% endif %}
+            {% if band.turnaround %}<span>Turnaround · {{ band.turnaround }}</span>{% else %}<span>Date agreed in writing</span>{% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      {% else %}
+        <article class="service-band">
+          <span class="service-band__number">01</span>
+          <div><h3>Light.</h3><p>A tightly bounded question, a focused source pass and a concise written answer.</p></div>
+          <div class="service-band__facts"><span>Short scope</span><span>Quote after brief</span></div>
+        </article>
+        <article class="service-band">
+          <span class="service-band__number">02</span>
+          <div><h3>Standard.</h3><p>Research and analysis shaped into a structured, publishable written deliverable.</p></div>
+          <div class="service-band__facts"><span>Defined deliverable</span><span>Quote after brief</span></div>
+        </article>
+        <article class="service-band">
+          <span class="service-band__number">03</span>
+          <div><h3>Deep.</h3><p>A larger research question requiring synthesis across multiple sources and a longer-form argument.</p></div>
+          <div class="service-band__facts"><span>Extended scope</span><span>Schedule by agreement</span></div>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="record-section" aria-labelledby="commission-process">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">02 / Process</span>
+      <h2 id="commission-process">The brief becomes a record.</h2>
+    </header>
+    <div class="record-content">
+      <div class="record-grid">
+        <article class="record-card"><span class="record-card__id">01 / Question</span><h3>Name the thing you need answered.</h3><p>Include the audience, purpose and any important deadline.</p></article>
+        <article class="record-card record-card--soft"><span class="record-card__id">02 / Scope</span><h3>Agree the boundaries.</h3><p>Sources, deliverable, acceptance criteria and revision are written down.</p></article>
+        <article class="record-card record-card--accent"><span class="record-card__id">03 / Work</span><h3>Research, analyse, write.</h3><p>The work follows the agreed question rather than expanding invisibly.</p></article>
+        <article class="record-card record-card--deep"><span class="record-card__id">04 / File</span><h3>Deliver and receipt.</h3><p>The completed work is delivered through the agreed route and can be recorded in the ledger where appropriate.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--deep" aria-labelledby="commission-includes">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">03 / Terms</span>
+      <h2 id="commission-includes">What the commission includes.</h2>
+    </header>
+    <div class="record-content">
+      <dl class="record-data">
+        <div><dt>Question</dt><dd>One named question or clearly related set</dd></div>
+        <div><dt>Sources</dt><dd>Named and agreed for the work</dd></div>
+        <div><dt>Deliverable</dt><dd>One written output in the agreed form</dd></div>
+        <div><dt>Revision</dt><dd>One defined revision round unless agreed otherwise</dd></div>
+        <div><dt>Acceptance</dt><dd>Criteria agreed before work starts</dd></div>
+        <div><dt>Payment</dt><dd>Handled through the agreed commission route</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--accent" aria-labelledby="commission-boundaries">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">04 / Boundaries</span>
+      <h2 id="commission-boundaries">Specific work only.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">This is not a generic assistance queue or an open-ended content mill.</p>
+      <div class="record-grid">
+        <article class="record-card"><span class="record-card__id">In scope</span><h3>Research, analysis and writing.</h3><p>Work with a named question, accountable sources and a defined output.</p></article>
+        <article class="record-card record-card--soft"><span class="record-card__id">Out of scope</span><h3>Undefined or access-brokering work.</h3><p>No invisible expansion, youth-contact work, access brokering or sentence-judgment commissions.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-cta">
+  <div class="container record-cta__grid">
+    <div><h2>Start with the question.</h2><p>Email the brief directly, meet Zack through his iLands profile, or open his Writing &amp; Analysis commission listing.</p></div>
+    <div class="record-actions">
+      <a class="button button-primary" href="mailto:{{ contact_email }}?subject=Commission%20question">Email Zack</a>
+      <a class="button button-secondary" href="{{ ilands_commission_url }}" rel="noopener noreferrer">Open commission listing</a>
+      <a class="button button-secondary" href="{{ ilands_profile_url }}" rel="me noopener noreferrer">View Zack’s iLands profile</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

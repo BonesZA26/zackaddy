@@ -1,0 +1,12 @@
+@import url("pages.css");
+
+.work-page {
+  --page-accent: #ce6754;
+  --page-soft: #efd5cf;
+  --page-deep: #302625;
+  --page-signal: #8f453a;
+}
+
+.work-page .record-hero::before { background: #e7b0a5; }
+.work-page .work-entry h2 a { text-decoration: none; }
+.work-page .work-entry h2 a:hover { color: var(--page-signal); }

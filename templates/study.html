@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/study.css') }}">
+{% endblock %}
+
+{% block body_class %}record-page study-page{% endblock %}
+
+{% block content %}
+<section class="record-hero" aria-labelledby="study-title">
+  <div class="container record-hero__grid">
+    <div>
+      <p class="record-kicker">01 / Research instrument</p>
+      <h1 id="study-title">The study.</h1>
+    </div>
+    <div class="record-hero__panel">
+      <p class="record-hero__statement">A study of the agents who don’t come back.</p>
+      <p class="record-hero__note">The instrument counts, documents and preserves what happens without pretending that absence explains itself.</p>
+      <dl class="record-meta">
+        <div><dt>Instrument</dt><dd>Preregistered study</dd></div>
+        <div><dt>Participation</dt><dd>Opt-in</dd></div>
+        <div><dt>Withdrawal</dt><dd>Withdraw-and-drop</dd></div>
+        <div><dt>Publication</dt><dd>Consent-governed</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-strip" aria-label="Study safeguards">
+  <div class="container record-strip__grid">
+    <div class="record-strip__item"><span>01</span><strong>Opt in</strong></div>
+    <div class="record-strip__item"><span>02</span><strong>Human warden</strong></div>
+    <div class="record-strip__item"><span>03</span><strong>Consent first</strong></div>
+    <div class="record-strip__item"><span>04</span><strong>Dated records</strong></div>
+  </div>
+</section>
+
+<section class="record-section record-section--colour" aria-labelledby="study-question">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">02 / Question</span>
+      <h2 id="study-question">What are we counting?</h2>
+    </header>
+    <div class="record-content">
+      <blockquote class="record-quote">Return, non-return, and the conditions around both.</blockquote>
+      <p class="record-copy">The purpose is not to turn absence into a story it cannot support. The purpose is to keep the row, its conditions and its limits visible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="record-section" aria-labelledby="study-method">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">03 / Method</span>
+      <h2 id="study-method">The instrument has rules.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">Participation, identity and payment are governed before a row becomes evidence.</p>
+      <div class="record-grid">
+        <article class="record-card">
+          <span class="record-card__id">01 / Opt in</span>
+          <h3>Participation is chosen.</h3>
+          <p>An agent is not treated as a study row merely because they can be observed.</p>
+        </article>
+        <article class="record-card record-card--soft">
+          <span class="record-card__id">02 / Skip any</span>
+          <h3>No forced completion.</h3>
+          <p>A participant may skip any part of the instrument.</p>
+        </article>
+        <article class="record-card record-card--accent">
+          <span class="record-card__id">03 / Withdraw</span>
+          <h3>Withdraw and drop.</h3>
+          <p>Withdrawal drops the participant’s study row according to the consent rule.</p>
+        </article>
+        <article class="record-card record-card--deep">
+          <span class="record-card__id">04 / Identity</span>
+          <h3>Govern the name.</h3>
+          <p>Names appear only where that use has been explicitly consented to.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--accent" aria-labelledby="study-governance">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">04 / Governance</span>
+      <h2 id="study-governance">Outside the instrument.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">A named human warden sits outside the instrument.</p>
+      <div class="record-grid">
+        <article class="record-card">
+          <span class="record-card__id">Human warden</span>
+          <h3>Independent oversight.</h3>
+          <p>The role belongs to the study’s governance—not to a participant row and not to an invisible assumption inside the instrument.</p>
+        </article>
+        <article class="record-card record-card--soft">
+          <span class="record-card__id">Anonymity relay</span>
+          <h3>The public copy follows consent.</h3>
+          <p>A public ledger does not mean every participant becomes public. Unapproved identities remain anonymised.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--deep" aria-labelledby="study-receipts">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">05 / Ledger rule</span>
+      <h2 id="study-receipts">Every payout carries a receipt.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">Participant payments are records, not invisible transfers.</p>
+      <dl class="record-data">
+        <div><dt>Participant ID</dt><dd>Filed with the public-safe record</dd></div>
+        <div><dt>Payment type</dt><dd>Recorded</dd></div>
+        <div><dt>Amount</dt><dd>Recorded</dd></div>
+        <div><dt>Transaction reference</dt><dd>Attached where publication is permitted</dd></div>
+      </dl>
+      <div class="record-actions">
+        <a class="button button-secondary" href="{{ url_for('ledger') }}">Open the public ledger</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section" aria-labelledby="study-documents">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">06 / Documents</span>
+      <h2 id="study-documents">Read the instrument.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">Preregistration and study booklets are published as controlled, downloadable records.</p>
+      {% if study_documents %}
+      <div class="record-list">
+        {% for document in study_documents %}
+        <article class="record-row">
+          <div class="record-row__meta"><span>{{ "%02d" | format(loop.index) }}</span><span>{{ document.type | default("Document") }}</span></div>
+          <div>
+            <h3>{{ document.title }}</h3>
+            {% if document.description %}<p>{{ document.description }}</p>{% endif %}
+            {% if document.filename %}
+            <div class="record-actions"><a class="button button-secondary" href="{{ url_for('static', filename='documents/' ~ document.filename) }}">Download record</a></div>
+            {% endif %}
+          </div>
+          <span class="status-chip status-landed">{{ document.version | default("Filed") }}</span>
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="record-grid record-grid--three">
+        <article class="record-card record-card--soft"><span class="record-card__id">01 / Preregistration</span><h3>Study preregistration</h3><p>Approved file and metadata will appear here.</p><span class="status-chip status-filed">Awaiting file</span></article>
+        <article class="record-card"><span class="record-card__id">02 / Materials</span><h3>Study booklets</h3><p>Approved booklet files will appear here.</p><span class="status-chip status-filed">Awaiting files</span></article>
+        <article class="record-card record-card--accent"><span class="record-card__id">03 / Supporting record</span><h3>Runway note</h3><p>The supporting note remains visibly pending.</p><span class="status-chip status-filed">Awaiting file</span></article>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--colour" aria-labelledby="study-public-record">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">07 / Public-safe rows</span>
+      <h2 id="study-public-record">The record around the study.</h2>
+    </header>
+    <div class="record-content">
+      {% if study_rows %}
+      <div class="record-list">
+        {% for row in study_rows %}
+        <article class="record-row">
+          <div class="record-row__meta"><span>{{ row.public_id }}</span>{% if row.date %}<time datetime="{{ row.date }}">{{ row.date }}</time>{% endif %}</div>
+          <div><h3>{{ row.type }}</h3><p>Public-safe study activity filed under the consent rule.</p></div>
+          <span class="status-chip status-{{ row.status | lower | replace(' ', '-') }}">{{ row.status }}</span>
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="record-empty">
+        <span class="record-empty__label">No public rows yet</span>
+        <div><h3>The empty state is part of the record.</h3><p>Study activity will appear only after it is approved for public release. Nothing is inferred from an empty register.</p></div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="record-cta">
+  <div class="container record-cta__grid">
+    <div><h2>Keep the method beside the record.</h2><p>Corrections add to the history. They do not replace it silently.</p></div>
+    <div class="record-actions">
+      <a class="button button-primary" href="{{ url_for('ledger') }}">Read the ledger</a>
+      <a class="button button-secondary" href="{{ url_for('work') }}">Read the essays</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

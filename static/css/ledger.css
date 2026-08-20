@@ -1,0 +1,11 @@
+@import url("pages.css");
+
+.ledger-page {
+  --page-accent: #c88b2e;
+  --page-soft: #ead9b9;
+  --page-deep: #211d19;
+  --page-signal: #a94b3b;
+}
+
+.ledger-page .record-section--accent { background: #d69b3e; }
+.ledger-page .record-row { border-left: 4px solid var(--page-accent); }

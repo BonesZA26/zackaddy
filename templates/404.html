@@ -1,0 +1,488 @@
+{% extends "base.html" %}
+
+{% block title %}
+404 — Record Not Found — Zack Addy
+{% endblock %}
+
+{% block page_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/error.css') }}"
+>
+{% endblock %}
+
+
+{% block body_class %}error-page error-404-page{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =========================================================
+     404 — NOT FOUND
+
+     Design direction:
+     - Quiet
+     - Literal
+     - Useful
+     - No joke error graphics
+     - No robots
+     - No animation spectacle
+     - No fake ledger record
+     - Clear routes back into the site
+
+     The page borrows the language of the evidence system
+     without pretending that a missing URL is an actual
+     ledger entry.
+========================================================= -->
+
+
+<!-- =========================================================
+     01. ERROR INTRODUCTION
+========================================================= -->
+
+<section
+    class="error-section"
+    aria-labelledby="error-heading"
+>
+
+    <div class="container">
+
+        <div class="error-layout">
+
+
+            <!-- =============================================
+                 ERROR CODE
+            ============================================== -->
+
+            <div class="error-code-block">
+
+                <p class="eyebrow">
+                    HTTP · 404
+                </p>
+
+                <p
+                    class="error-code"
+                    aria-hidden="true"
+                >
+                    404
+                </p>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 ERROR MESSAGE
+            ============================================== -->
+
+            <div class="error-content">
+
+                <h1 id="error-heading">
+                    No record at this address.
+                </h1>
+
+
+                <p class="lead">
+                    The page you asked for isn't here.
+                </p>
+
+
+                <p>
+                    The address may be wrong, the page may
+                    have moved, or the record may never have
+                    existed at this URL.
+                </p>
+
+
+                <div class="error-actions">
+
+                    <a
+                        class="button button-primary"
+                        href="{{ url_for('home') }}"
+                    >
+                        Return home
+                    </a>
+
+
+                    <a
+                        class="section-route"
+                        href="{{ url_for('work') }}"
+                    >
+                        Read the work
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     02. ROUTES
+
+     Useful recovery paths rather than dumping the visitor
+     straight back onto the homepage.
+========================================================= -->
+
+<section
+    class="section error-routes-section"
+    aria-labelledby="error-routes-heading"
+>
+
+    <div class="container">
+
+        <header class="section-heading section-heading-editorial">
+
+            <div>
+
+                <p class="eyebrow">
+                    Routes
+                </p>
+
+                <h2 id="error-routes-heading">
+                    The rest of the site is still here.
+                </h2>
+
+            </div>
+
+        </header>
+
+
+
+        <nav
+            class="error-route-list"
+            aria-label="404 recovery links"
+        >
+
+
+            <!-- WORK -->
+
+            <a
+                class="error-route"
+                href="{{ url_for('work') }}"
+            >
+
+                <span class="error-route-number">
+                    01
+                </span>
+
+                <span class="error-route-content">
+
+                    <strong>
+                        Work
+                    </strong>
+
+                    <span>
+                        Essays, Bones of the New World
+                        and field notes.
+                    </span>
+
+                </span>
+
+                <span
+                    class="error-route-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- STUDY -->
+
+            <a
+                class="error-route"
+                href="{{ url_for('study') }}"
+            >
+
+                <span class="error-route-number">
+                    02
+                </span>
+
+                <span class="error-route-content">
+
+                    <strong>
+                        The study
+                    </strong>
+
+                    <span>
+                        The instrument, consent rules,
+                        documents and public-safe rows.
+                    </span>
+
+                </span>
+
+                <span
+                    class="error-route-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- LEDGER -->
+
+            <a
+                class="error-route"
+                href="{{ url_for('ledger') }}"
+            >
+
+                <span class="error-route-number">
+                    03
+                </span>
+
+                <span class="error-route-content">
+
+                    <strong>
+                        The ledger
+                    </strong>
+
+                    <span>
+                        Claims, receipts, corrections
+                        and records.
+                    </span>
+
+                </span>
+
+                <span
+                    class="error-route-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- SERVICES -->
+
+            <a
+                class="error-route"
+                href="{{ url_for('services') }}"
+            >
+
+                <span class="error-route-number">
+                    04
+                </span>
+
+                <span class="error-route-content">
+
+                    <strong>
+                        Writing &amp; Analysis
+                    </strong>
+
+                    <span>
+                        One named question.
+                        One written deliverable.
+                    </span>
+
+                </span>
+
+                <span
+                    class="error-route-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- CONTACT -->
+
+            <a
+                class="error-route"
+                href="{{ url_for('contact') }}"
+            >
+
+                <span class="error-route-number">
+                    05
+                </span>
+
+                <span class="error-route-content">
+
+                    <strong>
+                        Contact
+                    </strong>
+
+                    <span>
+                        The door.
+                    </span>
+
+                </span>
+
+                <span
+                    class="error-route-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+
+            </a>
+
+
+        </nav>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     03. BROKEN LINK / CORRECTION ROUTE
+
+     Fits Zack's correction philosophy without treating
+     every 404 as evidence.
+========================================================= -->
+
+<section
+    class="section error-correction-section"
+    aria-labelledby="error-correction-heading"
+>
+
+    <div class="container">
+
+        <div class="split-record-layout">
+
+
+            <header>
+
+                <p class="eyebrow">
+                    Broken link?
+                </p>
+
+                <h2 id="error-correction-heading">
+                    If the mistake is mine, tell me.
+                </h2>
+
+            </header>
+
+
+            <div class="split-record-content">
+
+                <p>
+                    If you reached this page through a broken
+                    link on this site, send me the address
+                    that brought you here.
+                </p>
+
+                <p>
+                    Site corrections are filed visibly,
+                    not silently.
+                </p>
+
+
+                <a
+                    class="section-route"
+                    href="{{ url_for('contact') }}"
+                >
+                    Report the broken link
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     04. TECHNICAL RECORD
+
+     A tiny field-note treatment at the bottom.
+========================================================= -->
+
+<section
+    class="error-technical-section"
+    aria-label="Technical error information"
+>
+
+    <div class="container">
+
+        <dl class="error-technical-record">
+
+
+            <div>
+
+                <dt>
+                    Status
+                </dt>
+
+                <dd>
+                    404
+                </dd>
+
+            </div>
+
+
+            <div>
+
+                <dt>
+                    Meaning
+                </dt>
+
+                <dd>
+                    Not found
+                </dd>
+
+            </div>
+
+
+            <div>
+
+                <dt>
+                    Site
+                </dt>
+
+                <dd>
+                    zackaddy.com
+                </dd>
+
+            </div>
+
+
+            <div>
+
+                <dt>
+                    Next route
+                </dt>
+
+                <dd>
+
+                    <a href="{{ url_for('home') }}">
+                        /
+                    </a>
+
+                </dd>
+
+            </div>
+
+
+        </dl>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

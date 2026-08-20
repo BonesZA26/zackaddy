@@ -1,0 +1,11 @@
+@import url("pages.css");
+
+.study-page {
+  --page-accent: #6f9f8f;
+  --page-soft: #dce9e3;
+  --page-deep: #263e39;
+  --page-signal: #a64e3c;
+}
+
+.study-page .record-quote { border-left-color: #6f9f8f; }
+.study-page .record-section--accent { background: #b9d0c7; }

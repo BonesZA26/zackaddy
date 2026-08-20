@@ -1,0 +1,1551 @@
+/* ============================================================
+   ZACKADDY.COM
+   BASE / GLOBAL STYLESHEET
+
+   Shared across every page.
+
+   DESIGN SYSTEM
+   ------------------------------------------------------------
+   Ink on bone.
+   Serif for the read.
+   Mono for the record.
+   Sharp corners.
+   No gradients.
+   No decorative animation.
+   No generic "AI" visual language.
+   ============================================================ */
+
+
+/* ============================================================
+   01. FONT FILES
+
+   IMPORTANT:
+   Change the filenames below ONLY if your actual files inside
+   static/fonts/ use different names.
+   ============================================================ */
+
+
+@font-face {
+    font-family: "IBM Plex Serif";
+    src: url("../fonts/IBMPlexSerif-Regular.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Serif";
+    src: url("../fonts/IBMPlexSerif-Italic.woff2") format("woff2");
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Serif";
+    src: url("../fonts/IBMPlexSerif-Medium.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Serif";
+    src: url("../fonts/IBMPlexSerif-SemiBold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Serif";
+    src: url("../fonts/IBMPlexSerif-SemiBoldItalic.woff2") format("woff2");
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Serif";
+    src: url("../fonts/IBMPlexSerif-Bold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("../fonts/IBMPlexMono-Regular.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("../fonts/IBMPlexMono-Medium.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+}
+
+
+/* ============================================================
+   02. DESIGN TOKENS
+   ============================================================ */
+
+:root {
+
+    /* --------------------------------------------------------
+       Brand
+       -------------------------------------------------------- */
+
+    --ink: #211D19;
+    --bone: #E9E0D2;
+    --stone: #A89783;
+    --umber: #8A7B66;
+    --ochre: #C2872E;
+
+
+    /* --------------------------------------------------------
+       Neutrals
+       -------------------------------------------------------- */
+
+    --neutral-dark: #211D19;
+    --neutral-mid: #6E6357;
+    --neutral-light: #F4EFE6;
+
+    --white: #FFFFFF;
+    --black: #000000;
+
+
+    /* --------------------------------------------------------
+       Supporting structural colours
+
+       Decorative borders only.
+       -------------------------------------------------------- */
+
+    --border: #D8CFC0;
+    --disabled-background: #EDE7DC;
+
+    --ink-lifted: #3A342C;
+    --ink-pressed: #171310;
+
+
+    /* --------------------------------------------------------
+       Semantic
+       -------------------------------------------------------- */
+
+    --verified: #4E7A5B;
+    --warning: #B07D2B;
+    --error: #A44A3A;
+    --info: #5B6C82;
+    --pending: #A08F74;
+    --inactive: #B8B0A6;
+
+
+    /* --------------------------------------------------------
+       Typography
+       -------------------------------------------------------- */
+
+    --font-serif:
+        "IBM Plex Serif",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    --font-mono:
+        "IBM Plex Mono",
+        "Courier New",
+        monospace;
+
+
+    /* --------------------------------------------------------
+       Content widths
+       -------------------------------------------------------- */
+
+    --container-width: 1480px;
+    --reading-width: 68ch;
+
+
+    /* --------------------------------------------------------
+       Page gutters
+       -------------------------------------------------------- */
+
+    --gutter:
+        clamp(1.25rem, 4vw, 4.5rem);
+
+
+    /* --------------------------------------------------------
+       Shared spacing
+       -------------------------------------------------------- */
+
+    --space-1: 0.375rem;
+    --space-2: 0.625rem;
+    --space-3: 1rem;
+    --space-4: 1.5rem;
+    --space-5: 2rem;
+    --space-6: 3rem;
+    --space-7: 4.5rem;
+    --space-8: 6rem;
+
+
+    /* --------------------------------------------------------
+       Designer discretion #1
+
+       Transition duration/easing.
+       -------------------------------------------------------- */
+
+    --transition-fast: 150ms ease;
+    --transition-standard: 220ms ease;
+}
+
+
+/* ============================================================
+   03. RESET
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+html {
+    margin: 0;
+    padding: 0;
+
+    scroll-behavior: smooth;
+
+    background: var(--bone);
+}
+
+
+body {
+    margin: 0;
+
+    min-width: 320px;
+    min-height: 100vh;
+
+    background: var(--bone);
+    color: var(--ink);
+
+    font-family: var(--font-serif);
+    font-size: clamp(17px, 1.6vw, 18px);
+    font-weight: 400;
+    line-height: 1.65;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+img,
+picture,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+
+img {
+    height: auto;
+}
+
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+button {
+    color: inherit;
+}
+
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+figure,
+blockquote {
+    margin-top: 0;
+}
+
+
+::selection {
+    background: var(--ochre);
+    color: var(--ink);
+}
+
+
+/* ============================================================
+   04. ACCESSIBILITY
+   ============================================================ */
+
+.skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+
+    z-index: 9999;
+
+    transform: translateY(-180%);
+
+    padding: 0.75rem 1rem;
+
+    background: var(--ink);
+    color: var(--bone);
+
+    border: 1px solid var(--bone);
+
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    text-decoration: none;
+}
+
+
+.skip-link:focus {
+    transform: translateY(0);
+
+    outline: 2px solid var(--bone);
+    outline-offset: 2px;
+}
+
+
+:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+}
+
+
+/* ============================================================
+   05. SHARED CONTAINER
+   ============================================================ */
+
+.container {
+    width: min(
+        calc(100% - (var(--gutter) * 2)),
+        var(--container-width)
+    );
+
+    margin-inline: auto;
+}
+
+
+/* ============================================================
+   06. TYPOGRAPHY
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: var(--ink);
+    font-family: var(--font-serif);
+}
+
+
+h1 {
+    margin-bottom: 1.5rem;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+}
+
+
+h2 {
+    margin-bottom: 1.25rem;
+
+    font-size: clamp(1.625rem, 3vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+
+
+h3 {
+    margin-bottom: 1rem;
+
+    font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+
+h4 {
+    margin-bottom: 0.875rem;
+
+    font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+
+h5 {
+    margin-bottom: 0.75rem;
+
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+
+h6 {
+    margin-bottom: 0.75rem;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+p {
+    margin-bottom: 1.25rem;
+}
+
+
+strong {
+    font-weight: 600;
+}
+
+
+b {
+    font-weight: 700;
+}
+
+
+em,
+i {
+    font-style: italic;
+}
+
+
+.lead {
+    max-width: var(--reading-width);
+
+    font-size: clamp(1.1875rem, 1.9vw, 1.375rem);
+    line-height: 1.5;
+}
+
+
+.small-body {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+}
+
+
+.fine-print {
+    color: var(--neutral-mid);
+
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   07. RECORD / MONO TYPOGRAPHY
+   ============================================================ */
+
+.eyebrow,
+.record-label,
+.metadata-heading {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.metadata,
+.record-meta {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.78125rem;
+    font-weight: 400;
+    line-height: 1.55;
+}
+
+
+.ledger-entry {
+    font-family: var(--font-mono);
+    font-size: 0.84375rem;
+    font-weight: 400;
+    line-height: 1.55;
+}
+
+
+.caption,
+.source,
+.credit {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.78125rem;
+    font-weight: 400;
+    line-height: 1.45;
+
+    letter-spacing: 0.01em;
+}
+
+
+.footnote {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   08. LINKS
+   ============================================================ */
+
+a {
+    color: inherit;
+
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+
+    transition:
+        text-decoration-thickness var(--transition-fast),
+        opacity var(--transition-fast);
+}
+
+
+a:hover {
+    text-decoration-thickness: 2px;
+}
+
+
+a:visited {
+    color: var(--neutral-mid);
+}
+
+
+.brand:visited,
+.main-navigation a:visited,
+.footer-logo-link:visited,
+.footer-navigation a:visited,
+.button:visited,
+.btn:visited {
+    color: inherit;
+}
+
+
+/* ============================================================
+   09. BUTTONS
+   ============================================================ */
+
+.button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 46px;
+
+    padding: 0.75rem 1.125rem;
+
+    border-radius: 0;
+
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+
+    letter-spacing: 0.04em;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-standard),
+        border-color var(--transition-standard),
+        transform var(--transition-standard);
+}
+
+
+.button-primary,
+.btn-primary {
+    background: var(--ink);
+    color: var(--bone);
+
+    border: 1px solid var(--ink);
+}
+
+
+.button-primary:hover,
+.btn-primary:hover {
+    background: var(--ink-lifted);
+    color: var(--bone);
+
+    text-decoration: none;
+}
+
+
+.button-primary:active,
+.btn-primary:active {
+    background: var(--ink-pressed);
+
+    transform: translateY(1px);
+}
+
+
+.button-primary:focus-visible,
+.btn-primary:focus-visible {
+    outline: 2px solid var(--bone);
+    outline-offset: 2px;
+}
+
+
+.button-secondary,
+.btn-secondary {
+    background: var(--bone);
+    color: var(--ink);
+
+    border: 1px solid var(--umber);
+}
+
+
+.button-secondary:hover,
+.btn-secondary:hover {
+    background: var(--neutral-light);
+    color: var(--ink);
+
+    border-color: var(--umber);
+
+    text-decoration: none;
+}
+
+
+.button-secondary:active,
+.btn-secondary:active {
+    background: var(--neutral-light);
+
+    border-color: var(--neutral-mid);
+
+    transform: translateY(1px);
+}
+
+
+.button-secondary:focus-visible,
+.btn-secondary:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+
+.button:disabled,
+.btn:disabled,
+button:disabled {
+    background: var(--disabled-background);
+    color: var(--stone);
+
+    border-color: var(--border);
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* ============================================================
+   10. QUOTES
+   ============================================================ */
+
+blockquote {
+    max-width: var(--reading-width);
+
+    margin: 2rem 0;
+    padding: 0 0 0 1.5rem;
+
+    border-left: 3px solid var(--umber);
+
+    color: var(--ink);
+
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+
+blockquote cite {
+    display: block;
+
+    margin-top: 1rem;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-style: normal;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   11. CODE / TECHNICAL STRINGS
+   ============================================================ */
+
+code,
+.code {
+    padding: 0.15em 0.35em;
+
+    background: var(--neutral-light);
+    color: var(--ink);
+
+    border: 1px solid var(--border);
+    border-radius: 3px;
+
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   12. LISTS
+   ============================================================ */
+
+ul,
+ol {
+    padding-left: 1.5rem;
+}
+
+
+li {
+    margin-bottom: 0.4rem;
+}
+
+
+li::marker {
+    color: var(--ink);
+}
+
+
+li li::marker {
+    color: var(--neutral-mid);
+}
+
+
+/* ============================================================
+   13. TABLE FOUNDATIONS
+   ============================================================ */
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    color: var(--ink);
+}
+
+
+th,
+td {
+    padding: 0.875rem 0.75rem;
+
+    border-bottom: 1px solid var(--border);
+
+    text-align: left;
+    vertical-align: top;
+}
+
+
+th {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+td {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+}
+
+
+td.numeric,
+td.record-value {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+}
+
+
+/* ============================================================
+   14. STATUS CHIPS
+
+   Colour never carries the status alone.
+
+   Always use:
+   - label
+   - coloured border/dot
+   - readable Ink text
+
+   Designer discretion #2:
+   approximately 12% semantic tint.
+   ============================================================ */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 0.5rem;
+
+    padding: 0.35rem 0.55rem;
+
+    color: var(--ink);
+
+    border-left: 3px solid currentColor;
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.3;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+
+.status::before {
+    content: "";
+
+    flex: 0 0 auto;
+
+    width: 0.45rem;
+    height: 0.45rem;
+
+    background: var(--status-colour, var(--inactive));
+}
+
+
+.status-verified {
+    --status-colour: var(--verified);
+
+    background: rgb(78 122 91 / 12%);
+    border-left-color: var(--verified);
+}
+
+
+.status-warning {
+    --status-colour: var(--warning);
+
+    background: rgb(176 125 43 / 12%);
+    border-left-color: var(--warning);
+}
+
+
+.status-error {
+    --status-colour: var(--error);
+
+    background: rgb(164 74 58 / 12%);
+    border-left-color: var(--error);
+}
+
+
+.status-info {
+    --status-colour: var(--info);
+
+    background: rgb(91 108 130 / 12%);
+    border-left-color: var(--info);
+}
+
+
+.status-pending {
+    --status-colour: var(--pending);
+
+    background: rgb(160 143 116 / 12%);
+    border-left-color: var(--pending);
+}
+
+
+.status-inactive {
+    --status-colour: var(--inactive);
+
+    background: rgb(184 176 166 / 12%);
+    border-left-color: var(--inactive);
+}
+
+
+/* ============================================================
+   15. SITE HEADER
+
+   Desktop:
+   logo left
+   navigation right
+
+   No generic hamburger/menu button on desktop.
+   ============================================================ */
+
+.site-header {
+    position: relative;
+
+    z-index: 100;
+
+    background: var(--bone);
+
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+}
+
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 82px;
+
+    gap: 2rem;
+}
+
+
+/* ============================================================
+   16. BRAND / LOGO
+   ============================================================ */
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+
+    flex: 0 0 auto;
+
+    color: var(--ink);
+
+    text-decoration: none;
+}
+
+
+.brand:hover {
+    text-decoration: none;
+}
+
+
+.brand-logo {
+    display: block;
+
+    width: 48px;
+    height: 48px;
+}
+
+
+.brand-logo img {
+    display: block;
+
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+}
+
+
+/* ============================================================
+   17. DESKTOP NAVIGATION
+   ============================================================ */
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+
+    gap: clamp(1.25rem, 2.2vw, 2.25rem);
+}
+
+
+.main-navigation a {
+    position: relative;
+
+    padding: 0.4rem 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    text-decoration: none;
+}
+
+
+.main-navigation a:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+}
+
+
+.main-navigation a[aria-current="page"] {
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+}
+
+
+.main-navigation a:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+}
+
+
+/* ============================================================
+   18. MOBILE MENU BUTTON
+   ============================================================ */
+
+.menu-toggle {
+    display: none;
+
+    padding: 0.65rem 0;
+
+    background: transparent;
+    color: var(--ink);
+
+    border: 0;
+
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+
+.menu-toggle:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+}
+
+
+/* ============================================================
+   19. MAIN
+
+   Page-specific stylesheets control their own sections.
+
+   This deliberately DOES NOT impose giant minimum heights.
+   ============================================================ */
+
+main {
+    display: block;
+    width: 100%;
+}
+
+
+/* ============================================================
+   20. SITE FOOTER
+
+   The footer should feel like the closing page of a record,
+   rather than a generic website footer.
+   ============================================================ */
+
+.site-footer {
+    background: var(--ink);
+    color: var(--bone);
+
+    border-top: 1px solid var(--ink);
+}
+
+
+.footer-main {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    align-items: start;
+
+    gap: 4rem;
+
+    padding-top: clamp(3rem, 6vw, 5.5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+
+/* ============================================================
+   21. FOOTER IDENTITY
+   ============================================================ */
+
+.footer-identity {
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+
+.footer-logo-link {
+    flex: 0 0 auto;
+
+    color: var(--bone);
+
+    text-decoration: none;
+}
+
+
+.footer-logo {
+    display: block;
+
+    width: 44px;
+    height: 44px;
+}
+
+
+.footer-logo img {
+    width: 44px;
+    height: 44px;
+
+    object-fit: contain;
+}
+
+
+.footer-name-group {
+    display: grid;
+
+    gap: 0.2rem;
+}
+
+
+.footer-name {
+    margin: 0;
+
+    color: var(--bone);
+
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+
+.footer-description {
+    margin: 0;
+
+    color: var(--bone);
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.45;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    opacity: 0.78;
+}
+
+
+/* ============================================================
+   22. FOOTER NAVIGATION
+   ============================================================ */
+
+.footer-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    gap: 0.75rem 1.5rem;
+
+    max-width: 34rem;
+}
+
+
+.footer-navigation a {
+    color: var(--bone);
+
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    text-decoration: none;
+}
+
+
+.footer-navigation a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+}
+
+
+.footer-navigation a:focus-visible {
+    outline-color: var(--bone);
+}
+
+.main-navigation .nav-contact-link {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid currentColor;
+}
+
+.footer-direct-routes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-bottom: 1.5rem;
+    background: rgb(233 224 210 / 30%);
+    border: 1px solid rgb(233 224 210 / 30%);
+}
+
+.footer-direct-routes div {
+    display: grid;
+    gap: 0.45rem;
+    padding: 1.25rem;
+    background: var(--ink);
+}
+
+.footer-direct-routes span {
+    color: var(--bone);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.footer-direct-routes a {
+    color: var(--bone);
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    overflow-wrap: anywhere;
+    text-underline-offset: 0.25em;
+}
+
+
+/* ============================================================
+   23. CORRECTION PRINCIPLE
+   ============================================================ */
+
+.footer-record {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+
+    border-top: 1px solid rgb(233 224 210 / 30%);
+    border-bottom: 1px solid rgb(233 224 210 / 30%);
+}
+
+
+.correction-principle {
+    max-width: var(--reading-width);
+
+    margin: 0;
+
+    color: var(--bone);
+
+    font-family: var(--font-serif);
+    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   24. FOOTER BOTTOM
+   ============================================================ */
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 2rem;
+
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+}
+
+
+.footer-copyright,
+.footer-privacy {
+    margin: 0;
+
+    color: var(--bone);
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.45;
+
+    letter-spacing: 0.02em;
+
+    opacity: 0.78;
+}
+
+
+/* ============================================================
+   25. DARK-SURFACE ACCESSIBILITY
+   ============================================================ */
+
+.site-footer a:focus-visible {
+    outline: 2px solid var(--bone);
+    outline-offset: 3px;
+}
+
+
+/* ============================================================
+   26. TABLET
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .footer-direct-routes {
+        grid-template-columns: 1fr;
+    }
+
+    .header-inner {
+        min-height: 72px;
+    }
+
+
+    /* --------------------------------------------------------
+       Mobile navigation activation
+       -------------------------------------------------------- */
+
+    .menu-toggle {
+        display: inline-flex;
+
+        margin-left: auto;
+    }
+
+
+    .main-navigation {
+        position: absolute;
+
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        display: none;
+
+        padding:
+            1.5rem
+            var(--gutter)
+            2rem;
+
+        background: var(--bone);
+
+        border-bottom: 1px solid var(--ink);
+    }
+
+
+    .main-navigation.is-open {
+        display: grid;
+
+        gap: 0;
+    }
+
+
+    .main-navigation a {
+        display: block;
+
+        padding: 0.9rem 0;
+
+        border-bottom: 1px solid var(--border);
+    }
+
+
+    .main-navigation a:last-child {
+        border-bottom: 0;
+    }
+
+
+    .footer-main {
+        grid-template-columns: 1fr;
+
+        gap: 2.5rem;
+    }
+
+
+    .footer-navigation {
+        justify-content: flex-start;
+    }
+
+}
+
+
+/* ============================================================
+   27. MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    :root {
+        --gutter: 1.25rem;
+    }
+
+
+    .header-inner {
+        min-height: 68px;
+    }
+
+
+    .brand-logo,
+    .brand-logo img {
+        width: 42px;
+        height: 42px;
+    }
+
+
+    .footer-main {
+        padding-top: 3rem;
+        padding-bottom: 2.5rem;
+    }
+
+
+    .footer-identity {
+        align-items: flex-start;
+    }
+
+
+    .footer-navigation {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        width: 100%;
+
+        gap: 0;
+    }
+
+
+    .footer-navigation a {
+        padding: 0.75rem 0;
+
+        border-bottom: 1px solid rgb(233 224 210 / 20%);
+    }
+
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 0.5rem;
+    }
+
+
+    table {
+        font-size: 0.875rem;
+    }
+
+}
+
+
+/* ============================================================
+   28. SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 390px) {
+
+    .footer-navigation {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* ============================================================
+   29. LARGE DESKTOP
+   ============================================================ */
+
+@media (min-width: 1600px) {
+
+    :root {
+        --container-width: 1520px;
+    }
+
+}
+
+
+/* ============================================================
+   30. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+}
+
+
+/* ============================================================
+   31. PRINT
+   ============================================================ */
+
+@media print {
+
+    .site-header,
+    .site-footer,
+    .skip-link,
+    .menu-toggle {
+        display: none !important;
+    }
+
+
+    html,
+    body {
+        background: var(--white);
+        color: var(--black);
+    }
+
+
+    a {
+        color: inherit;
+    }
+
+}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block body_class %}record-page contact-page{% endblock %}
+
+{% block content %}
+<section class="record-hero" aria-labelledby="contact-title">
+  <div class="container record-hero__grid">
+    <div>
+      <p class="record-kicker">Direct / Written / Specific</p>
+      <h1 id="contact-title">Start with the question.</h1>
+    </div>
+    <div class="record-hero__panel">
+      <p class="record-hero__statement">For writing and analysis commissions, email Zack directly.</p>
+      <p class="record-hero__note">Give the question, the audience and the finish line. Zack will reply with the route and scope.</p>
+      <div class="record-actions">
+        <a class="button button-primary" href="mailto:{{ contact_email }}?subject=Commission%20question">Email Zack</a>
+        <a class="button button-secondary" href="{{ ilands_commission_url }}" rel="noopener noreferrer">Commission Zack</a>
+        <a class="button button-secondary" href="{{ ilands_profile_url }}" rel="me noopener noreferrer">iLands profile</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-strip" aria-label="Contact route">
+  <div class="container record-strip__grid">
+    <div class="record-strip__item"><span>Route</span><strong>Email</strong></div>
+    <div class="record-strip__item"><span>Address</span><strong>{{ contact_email }}</strong></div>
+    <div class="record-strip__item"><span>Commission</span><strong>Writing + analysis</strong></div>
+    <div class="record-strip__item"><span>Secondary</span><strong>iLands profile</strong></div>
+  </div>
+</section>
+
+<section class="record-section record-section--colour" aria-labelledby="contact-routes">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">01 / Routes</span>
+      <h2 id="contact-routes">Two doors. One brief.</h2>
+    </header>
+    <div class="record-content">
+      <div class="contact-route">
+        <span class="contact-route__label">Email</span>
+        <div class="contact-route__value"><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></div>
+      </div>
+      <div class="contact-route">
+        <span class="contact-route__label">iLands profile</span>
+        <div class="contact-route__value">
+          <a href="{{ ilands_profile_url }}" rel="me noopener noreferrer">View Zack on iLands</a>
+        </div>
+      </div>
+      <div class="contact-route">
+        <span class="contact-route__label">Writing &amp; Analysis commissions</span>
+        <div class="contact-route__value"><a href="{{ ilands_commission_url }}" rel="noopener noreferrer">Open Zack’s commission listing</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section" aria-labelledby="contact-brief">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">02 / Brief</span>
+      <h2 id="contact-brief">What to send.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">A good first message can be short. It only needs enough structure to make the work inspectable.</p>
+      <div class="record-grid">
+        <article class="record-card"><span class="record-card__id">01 / Question</span><h3>What needs answering?</h3><p>Name the question as clearly as you can.</p></article>
+        <article class="record-card record-card--soft"><span class="record-card__id">02 / Audience</span><h3>Who is it for?</h3><p>Say who will read or use the work.</p></article>
+        <article class="record-card record-card--accent"><span class="record-card__id">03 / Output</span><h3>What should exist at the end?</h3><p>Note the format, approximate length and purpose.</p></article>
+        <article class="record-card record-card--deep"><span class="record-card__id">04 / Timing</span><h3>When is it needed?</h3><p>Include a real deadline where one exists.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--deep" aria-labelledby="contact-expect">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">03 / Expectation</span>
+      <h2 id="contact-expect">Specific in. Specific out.</h2>
+    </header>
+    <div class="record-content">
+      <dl class="record-data">
+        <div><dt>Reply</dt><dd>A response about fit, scope and next steps</dd></div>
+        <div><dt>Quote</dt><dd>Provided after the brief is understood</dd></div>
+        <div><dt>Scope</dt><dd>Agreed before work begins</dd></div>
+        <div><dt>Record</dt><dd>Filed where public documentation is appropriate</dd></div>
+        <div><dt>Privacy</dt><dd>No contact database or visitor tracking on this site</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--accent" aria-labelledby="contact-fit">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">04 / Fit</span>
+      <h2 id="contact-fit">Check the work first.</h2>
+    </header>
+    <div class="record-content">
+      <p class="record-lead">The essays show the voice. The study shows the method. The ledger shows the accountability rule.</p>
+      <div class="record-actions">
+        <a class="button button-primary" href="{{ url_for('work') }}">Read the work</a>
+        <a class="button button-secondary" href="{{ url_for('study') }}">Open the study</a>
+        <a class="button button-secondary" href="{{ url_for('ledger') }}">Inspect the ledger</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-cta">
+  <div class="container record-cta__grid">
+    <div><h2>Send the question.</h2><p>No form to feed and no queue to join—just a direct written route.</p></div>
+    <div class="record-actions">
+      <a class="button button-primary" href="mailto:{{ contact_email }}?subject=Commission%20question">Email {{ contact_email }}</a>
+      <a class="button button-secondary" href="{{ ilands_commission_url }}" rel="noopener noreferrer">Open commission listing</a>
+      <a class="button button-secondary" href="{{ ilands_profile_url }}" rel="me noopener noreferrer">View iLands profile</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

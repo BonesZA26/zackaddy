@@ -1,0 +1,1766 @@
+/* ============================================================
+   ZACKADDY.COM
+   ESSAY.CSS
+
+   Individual essay / long-form publication.
+
+   Visual direction:
+   - field paper
+   - published research note
+   - long-form editorial reading
+   - evidence remains visible
+   - serif = argument
+   - mono = record
+   - restrained Ink / Bone
+   ============================================================ */
+
+
+/* ============================================================
+   01. PAGE
+   ============================================================ */
+
+.essay-page {
+    position: relative;
+
+    background: var(--bone);
+    color: var(--ink);
+}
+
+
+/* ============================================================
+   02. ESSAY HERO
+   ============================================================ */
+
+.essay-hero {
+    position: relative;
+
+    padding:
+        clamp(6.5rem, 11vw, 11rem)
+        0
+        clamp(4.5rem, 8vw, 7.5rem);
+
+    border-bottom: 1px solid var(--ink);
+
+    overflow: hidden;
+}
+
+
+/*
+   Vertical archive rule.
+   Gives the masthead a record-sheet structure without
+   introducing decorative imagery.
+*/
+
+.essay-hero::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    left: calc(50% + 17rem);
+
+    width: 1px;
+
+    background: rgb(33 29 25 / 12%);
+
+    pointer-events: none;
+}
+
+
+.essay-hero-inner {
+    position: relative;
+    z-index: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(220px, 0.55fr);
+
+    gap: clamp(4rem, 9vw, 10rem);
+
+    align-items: end;
+}
+
+
+/* ============================================================
+   03. ESSAY HERO — TITLE
+   ============================================================ */
+
+.essay-heading {
+    max-width: 950px;
+}
+
+
+.essay-heading .eyebrow {
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+
+.essay-heading h1,
+.essay-hero h1 {
+    max-width: 950px;
+
+    margin: 0;
+
+    font-size: clamp(3rem, 6.5vw, 6.7rem);
+    font-weight: 600;
+    line-height: 0.98;
+
+    letter-spacing: -0.045em;
+
+    text-wrap: balance;
+}
+
+
+.essay-subtitle {
+    max-width: 720px;
+
+    margin:
+        clamp(2rem, 4vw, 3.5rem)
+        0
+        0;
+
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   04. ESSAY HERO — RECORD
+   ============================================================ */
+
+.essay-record-panel {
+    align-self: stretch;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding-left: clamp(2rem, 4vw, 4rem);
+}
+
+
+.essay-record-panel-inner {
+    padding-top: 1.25rem;
+
+    border-top: 3px solid var(--ink);
+}
+
+
+.essay-record-panel .record-label {
+    display: block;
+
+    margin-bottom: 2.25rem;
+}
+
+
+.essay-record-panel dl {
+    margin: 0;
+}
+
+
+.essay-record-panel dl > div {
+    display: grid;
+
+    grid-template-columns:
+        minmax(75px, 0.7fr)
+        minmax(0, 1.3fr);
+
+    gap: 1rem;
+
+    padding: 0.8rem 0;
+
+    border-bottom: 1px solid rgb(33 29 25 / 25%);
+}
+
+
+.essay-record-panel dt {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+
+.essay-record-panel dd {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   05. SERIES / RECORD STRIP
+   ============================================================ */
+
+.essay-record-strip {
+    background: var(--neutral-light);
+
+    border-bottom: 1px solid var(--ink);
+}
+
+
+.essay-record-strip-inner {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    border-left: 1px solid rgb(33 29 25 / 25%);
+}
+
+
+.essay-record-strip-item {
+    min-height: 92px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    padding: 1rem;
+
+    border-right: 1px solid rgb(33 29 25 / 25%);
+}
+
+
+.essay-record-strip-label {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.essay-record-strip-value {
+    color: var(--ink);
+
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.45;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   06. ESSAY BODY LAYOUT
+   ============================================================ */
+
+.essay-body {
+    padding:
+        clamp(5rem, 9vw, 9rem)
+        0
+        clamp(7rem, 12vw, 12rem);
+}
+
+
+.essay-body-inner,
+.essay-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(150px, 0.42fr)
+        minmax(0, 1.58fr);
+
+    gap: clamp(3rem, 8vw, 9rem);
+
+    align-items: start;
+}
+
+
+/* ============================================================
+   07. ESSAY SIDEBAR
+   ============================================================ */
+
+.essay-sidebar {
+    position: sticky;
+
+    top: 120px;
+}
+
+
+.essay-sidebar-section {
+    padding-top: 1rem;
+
+    border-top: 1px solid var(--ink);
+}
+
+
+.essay-sidebar-section + .essay-sidebar-section {
+    margin-top: 3rem;
+}
+
+
+.essay-sidebar .record-label {
+    display: block;
+
+    margin-bottom: 1.5rem;
+}
+
+
+.essay-sidebar p {
+    margin: 0;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+}
+
+
+.essay-sidebar p + p {
+    margin-top: 0.8rem;
+}
+
+
+.essay-sidebar a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    text-underline-offset: 4px;
+}
+
+
+/* ============================================================
+   08. ESSAY CONTENT
+   ============================================================ */
+
+.essay-content,
+.article-content {
+    width: 100%;
+    max-width: var(--reading-width);
+
+    min-width: 0;
+}
+
+
+/*
+   First paragraph gets editorial prominence only when
+   explicitly marked as lead.
+*/
+
+.essay-content .lead,
+.article-content .lead {
+    margin-bottom: 2.25rem;
+
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    line-height: 1.55;
+}
+
+
+/* ============================================================
+   09. BODY PARAGRAPHS
+   ============================================================ */
+
+.essay-content p,
+.article-content p {
+    margin:
+        0
+        0
+        1.55em;
+
+    font-family: var(--font-serif);
+    font-size: clamp(1.0625rem, 1.25vw, 1.125rem);
+    font-weight: 400;
+    line-height: 1.72;
+}
+
+
+/* ============================================================
+   10. ESSAY HEADINGS
+   ============================================================ */
+
+.essay-content h2,
+.article-content h2 {
+    margin:
+        clamp(4rem, 8vw, 6.5rem)
+        0
+        1.5rem;
+
+    padding-top: 1.25rem;
+
+    border-top: 1px solid var(--ink);
+
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 600;
+    line-height: 1.12;
+
+    letter-spacing: -0.02em;
+}
+
+
+.essay-content h3,
+.article-content h3 {
+    margin:
+        clamp(3rem, 6vw, 4.5rem)
+        0
+        1.25rem;
+
+    font-size: clamp(1.5rem, 2.3vw, 2rem);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+
+.essay-content h4,
+.article-content h4 {
+    margin:
+        2.8rem
+        0
+        1rem;
+
+    font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+
+.essay-content h5,
+.article-content h5 {
+    margin:
+        2.5rem
+        0
+        0.9rem;
+}
+
+
+.essay-content h6,
+.article-content h6 {
+    margin:
+        2.5rem
+        0
+        1rem;
+}
+
+
+/* ============================================================
+   11. BODY LINKS
+   ============================================================ */
+
+.essay-content a,
+.article-content a {
+    color: var(--ink);
+
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+
+.essay-content a:hover,
+.article-content a:hover {
+    color: var(--ink);
+
+    text-decoration-thickness: 2px;
+}
+
+
+/* ============================================================
+   12. BODY EMPHASIS
+   ============================================================ */
+
+.essay-content strong,
+.article-content strong {
+    font-weight: 600;
+}
+
+
+.essay-content b,
+.article-content b {
+    font-weight: 700;
+}
+
+
+.essay-content em,
+.article-content em {
+    font-style: italic;
+}
+
+
+/* ============================================================
+   13. BLOCKQUOTES
+   ============================================================ */
+
+.essay-content blockquote,
+.article-content blockquote {
+    max-width: 62ch;
+
+    margin:
+        clamp(3rem, 6vw, 5rem)
+        0;
+
+    padding:
+        0
+        0
+        0
+        clamp(1.25rem, 3vw, 2rem);
+
+    border-left: 3px solid var(--umber);
+
+    font-size: clamp(1.3rem, 2vw, 1.55rem);
+    font-style: italic;
+    line-height: 1.55;
+}
+
+
+.essay-content blockquote p,
+.article-content blockquote p {
+    margin: 0;
+
+    font-size: inherit;
+    line-height: inherit;
+}
+
+
+.essay-content blockquote cite,
+.article-content blockquote cite {
+    display: block;
+
+    margin-top: 1.3rem;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-style: normal;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   14. LISTS
+   ============================================================ */
+
+.essay-content ul,
+.essay-content ol,
+.article-content ul,
+.article-content ol {
+    margin:
+        1.5rem
+        0
+        2rem;
+
+    padding-left: 1.5rem;
+}
+
+
+.essay-content li,
+.article-content li {
+    margin-bottom: 0.7rem;
+
+    padding-left: 0.3rem;
+
+    font-family: var(--font-serif);
+    font-size: clamp(1.0625rem, 1.25vw, 1.125rem);
+    line-height: 1.65;
+}
+
+
+.essay-content li::marker,
+.article-content li::marker {
+    color: var(--ink);
+}
+
+
+.essay-content li li::marker,
+.article-content li li::marker {
+    color: var(--neutral-mid);
+}
+
+
+/* ============================================================
+   15. HORIZONTAL RULE
+   ============================================================ */
+
+.essay-content hr,
+.article-content hr {
+    width: 100%;
+
+    margin:
+        clamp(3.5rem, 7vw, 6rem)
+        0;
+
+    border: 0;
+    border-top: 1px solid var(--ink);
+}
+
+
+/* ============================================================
+   16. INLINE CITATIONS
+   ============================================================ */
+
+.citation,
+.citation-marker,
+.essay-content sup,
+.article-content sup {
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    font-weight: 400;
+    line-height: 1;
+
+    vertical-align: super;
+}
+
+
+.citation a,
+.citation-marker a,
+.essay-content sup a,
+.article-content sup a {
+    font-family: inherit;
+}
+
+
+/* ============================================================
+   17. EVIDENCE / FIELD NOTE
+   ============================================================ */
+
+.evidence-note,
+.field-note,
+.article-note {
+    position: relative;
+
+    margin:
+        clamp(3rem, 6vw, 5rem)
+        0;
+
+    padding:
+        clamp(1.5rem, 3vw, 2.25rem);
+
+    background: var(--neutral-light);
+
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--border);
+}
+
+
+.evidence-note::before,
+.field-note::before,
+.article-note::before {
+    content: "FIELD NOTE";
+
+    display: block;
+
+    margin-bottom: 1.25rem;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.evidence-note p,
+.field-note p,
+.article-note p {
+    margin-bottom: 1rem;
+
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+
+.evidence-note p:last-child,
+.field-note p:last-child,
+.article-note p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ============================================================
+   18. CORRECTION NOTE
+
+   Corrections should be MORE visible than ordinary metadata.
+   Zack explicitly wants mistakes preserved, not hidden.
+   ============================================================ */
+
+.correction-note {
+    position: relative;
+
+    margin:
+        clamp(3.5rem, 7vw, 5.5rem)
+        0;
+
+    padding:
+        clamp(1.5rem, 3vw, 2.25rem);
+
+    background: rgb(176 125 43 / 12%);
+
+    border-left: 3px solid var(--warning);
+    border-top: 1px solid var(--warning);
+    border-bottom: 1px solid var(--warning);
+}
+
+
+.correction-note::before {
+    content: "CORRECTION";
+
+    display: block;
+
+    margin-bottom: 1.25rem;
+
+    color: var(--ink);
+
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.correction-note p {
+    margin-bottom: 1rem;
+
+    font-size: 1rem;
+}
+
+
+.correction-note p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ============================================================
+   19. CODE / TECHNICAL STRINGS
+   ============================================================ */
+
+.essay-content code,
+.article-content code {
+    padding:
+        0.12em
+        0.32em;
+
+    background: var(--neutral-light);
+
+    border: 1px solid var(--border);
+    border-radius: 3px;
+
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+
+.essay-content pre,
+.article-content pre {
+    max-width: 100%;
+
+    margin:
+        2.5rem
+        0;
+
+    padding: 1.5rem;
+
+    overflow-x: auto;
+
+    background: var(--neutral-light);
+
+    border: 1px solid var(--border);
+    border-radius: 0;
+
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+
+.essay-content pre code,
+.article-content pre code {
+    padding: 0;
+
+    background: transparent;
+
+    border: 0;
+}
+
+
+/* ============================================================
+   20. FIGURES
+   ============================================================ */
+
+.essay-content figure,
+.article-content figure {
+    margin:
+        clamp(3.5rem, 7vw, 6rem)
+        0;
+}
+
+
+.essay-content figure img,
+.article-content figure img {
+    width: 100%;
+
+    border: 1px solid var(--border);
+}
+
+
+.essay-content figcaption,
+.article-content figcaption {
+    margin-top: 0.85rem;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   21. WIDE FIGURES
+
+   Use class="figure-wide" when a chart genuinely needs more
+   horizontal room than the prose column.
+   ============================================================ */
+
+.figure-wide {
+    width: min(90vw, 1050px);
+    max-width: none;
+
+    margin-left: 50% !important;
+
+    transform: translateX(-50%);
+}
+
+
+/* ============================================================
+   22. DATA TABLES
+   ============================================================ */
+
+.essay-table-wrapper,
+.table-wrapper {
+    width: 100%;
+
+    margin:
+        clamp(3rem, 6vw, 5rem)
+        0;
+
+    overflow-x: auto;
+}
+
+
+.essay-content table,
+.article-content table {
+    min-width: 620px;
+
+    border-top: 1px solid var(--ink);
+}
+
+
+.essay-content th,
+.article-content th {
+    padding:
+        0.85rem
+        0.75rem;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+
+    border-bottom: 1px solid var(--ink);
+}
+
+
+.essay-content td,
+.article-content td {
+    padding:
+        1rem
+        0.75rem;
+
+    font-family: var(--font-serif);
+    font-size: 0.94rem;
+    line-height: 1.55;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.essay-content td.numeric,
+.article-content td.numeric {
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+}
+
+
+/* ============================================================
+   23. SOURCE / FOOTNOTE SECTION
+   ============================================================ */
+
+.essay-sources,
+.article-sources {
+    margin-top: clamp(5rem, 10vw, 8rem);
+
+    padding-top: 1.5rem;
+
+    border-top: 3px solid var(--ink);
+}
+
+
+.essay-sources h2,
+.article-sources h2 {
+    margin:
+        0
+        0
+        2.5rem;
+
+    padding: 0;
+
+    border: 0;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.essay-sources ol,
+.article-sources ol {
+    margin: 0;
+    padding-left: 1.4rem;
+}
+
+
+.essay-sources li,
+.article-sources li {
+    margin-bottom: 1rem;
+
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    line-height: 1.55;
+}
+
+
+/* ============================================================
+   24. END RECORD
+   ============================================================ */
+
+.essay-end-record {
+    margin-top: clamp(5rem, 10vw, 8rem);
+
+    padding:
+        1.5rem
+        0;
+
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+}
+
+
+.essay-end-record-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 2rem;
+}
+
+
+.essay-end-record-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.6rem;
+}
+
+
+.essay-end-record-label {
+    color: var(--neutral-mid);
+
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.essay-end-record-value {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   25. PREVIOUS / NEXT ESSAY
+   ============================================================ */
+
+.essay-navigation {
+    background: var(--ink);
+    color: var(--bone);
+}
+
+
+.essay-navigation-inner {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+}
+
+
+.essay-nav-item {
+    min-height: clamp(230px, 25vw, 350px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding:
+        clamp(2rem, 5vw, 4.5rem);
+
+    color: var(--bone);
+
+    text-decoration: none;
+
+    border-right: 1px solid rgb(233 224 210 / 30%);
+}
+
+
+.essay-nav-item:last-child {
+    border-right: 0;
+}
+
+
+.essay-nav-label {
+    color: var(--stone);
+
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.essay-nav-title {
+    max-width: 500px;
+
+    margin-top: 3rem;
+
+    color: var(--bone);
+
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+
+.essay-nav-item:hover {
+    color: var(--bone);
+
+    text-decoration: none;
+}
+
+
+.essay-nav-item:hover .essay-nav-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
+}
+
+
+.essay-nav-item:focus-visible {
+    outline: 2px solid var(--bone);
+    outline-offset: -6px;
+}
+
+
+/* ============================================================
+   26. RETURN TO WORK
+   ============================================================ */
+
+.essay-return {
+    padding:
+        2rem
+        0;
+
+    background: var(--neutral-light);
+
+    border-bottom: 1px solid var(--ink);
+}
+
+
+.essay-return a {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+
+    letter-spacing: 0.03em;
+
+    text-underline-offset: 4px;
+}
+
+
+/* ============================================================
+   27. TABLET
+   ============================================================ */
+
+@media (max-width: 1000px) {
+
+    .essay-hero::after {
+        left: 70%;
+    }
+
+
+    .essay-hero-inner {
+        grid-template-columns:
+            minmax(0, 1.35fr)
+            minmax(190px, 0.65fr);
+
+        gap: 4rem;
+    }
+
+
+    .essay-body-inner,
+    .essay-layout {
+        grid-template-columns:
+            130px
+            minmax(0, 1fr);
+
+        gap: 4rem;
+    }
+
+}
+
+
+/* ============================================================
+   28. SMALL TABLET
+   ============================================================ */
+
+@media (max-width: 800px) {
+
+    /* Hero */
+
+    .essay-hero {
+        padding:
+            7rem
+            0
+            5rem;
+    }
+
+
+    .essay-hero::after {
+        display: none;
+    }
+
+
+    .essay-hero-inner {
+        display: block;
+    }
+
+
+    .essay-record-panel {
+        margin-top: 5rem;
+        padding-left: 0;
+    }
+
+
+    .essay-record-panel-inner {
+        max-width: 520px;
+    }
+
+
+    /* Record strip */
+
+    .essay-record-strip-inner {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .essay-record-strip-item {
+        border-bottom: 1px solid rgb(33 29 25 / 25%);
+    }
+
+
+    /* Article */
+
+    .essay-body-inner,
+    .essay-layout {
+        display: block;
+    }
+
+
+    .essay-sidebar {
+        position: static;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 2rem;
+
+        margin-bottom: 5rem;
+    }
+
+
+    .essay-sidebar-section + .essay-sidebar-section {
+        margin-top: 0;
+    }
+
+
+    .essay-content,
+    .article-content {
+        margin-inline: auto;
+    }
+
+
+    /* Navigation */
+
+    .essay-navigation-inner {
+        grid-template-columns: 1fr;
+    }
+
+
+    .essay-nav-item {
+        min-height: 220px;
+
+        border-right: 0;
+        border-bottom: 1px solid rgb(233 224 210 / 30%);
+    }
+
+
+    .essay-nav-item:last-child {
+        border-bottom: 0;
+    }
+
+}
+
+
+/* ============================================================
+   29. MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    /* Hero */
+
+    .essay-hero {
+        padding:
+            5.5rem
+            0
+            4rem;
+    }
+
+
+    .essay-heading h1,
+    .essay-hero h1 {
+        font-size: clamp(2.8rem, 14vw, 4.6rem);
+        line-height: 1;
+    }
+
+
+    .essay-subtitle {
+        margin-top: 2rem;
+
+        font-size: 1.15rem;
+    }
+
+
+    .essay-record-panel {
+        margin-top: 4rem;
+    }
+
+
+    .essay-record-panel dl > div {
+        grid-template-columns:
+            80px
+            minmax(0, 1fr);
+    }
+
+
+    /* Strip */
+
+    .essay-record-strip-inner {
+        grid-template-columns: 1fr;
+    }
+
+
+    .essay-record-strip-item {
+        min-height: 82px;
+    }
+
+
+    /* Body */
+
+    .essay-body {
+        padding:
+            4.5rem
+            0
+            7rem;
+    }
+
+
+    .essay-sidebar {
+        display: block;
+
+        margin-bottom: 4rem;
+    }
+
+
+    .essay-sidebar-section + .essay-sidebar-section {
+        margin-top: 2.5rem;
+    }
+
+
+    .essay-content p,
+    .article-content p {
+        font-size: 1.0625rem;
+        line-height: 1.7;
+    }
+
+
+    .essay-content h2,
+    .article-content h2 {
+        margin-top: 4rem;
+
+        font-size: clamp(1.8rem, 9vw, 2.5rem);
+    }
+
+
+    .essay-content h3,
+    .article-content h3 {
+        margin-top: 3rem;
+
+        font-size: clamp(1.4rem, 7vw, 1.9rem);
+    }
+
+
+    /* Quote */
+
+    .essay-content blockquote,
+    .article-content blockquote {
+        margin:
+            3rem
+            0;
+
+        padding-left: 1.25rem;
+
+        font-size: 1.25rem;
+    }
+
+
+    /* Wide figures collapse to normal width */
+
+    .figure-wide {
+        width: 100%;
+
+        margin-left: 0 !important;
+
+        transform: none;
+    }
+
+
+    /* End record */
+
+    .essay-end-record-grid {
+        grid-template-columns: 1fr;
+
+        gap: 1.5rem;
+    }
+
+
+    /* Navigation */
+
+    .essay-nav-item {
+        min-height: 200px;
+
+        padding:
+            2rem
+            0;
+    }
+
+}
+
+
+/* ============================================================
+   30. VERY SMALL SCREENS
+   ============================================================ */
+
+@media (max-width: 380px) {
+
+    .essay-heading h1,
+    .essay-hero h1 {
+        font-size: 2.7rem;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .essay-record-panel dl > div {
+        grid-template-columns: 1fr;
+
+        gap: 0.25rem;
+    }
+
+}
+
+
+/* ============================================================
+   31. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .essay-nav-item {
+        transition: none;
+    }
+
+}
+
+
+/* ============================================================
+   LIVE TEMPLATE ALIGNMENT
+
+   The publication template uses record-oriented class names.
+   These rules connect that semantic HTML to the editorial system
+   above and keep the reading experience compact and deliberate.
+   ============================================================ */
+
+.essay-header-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(250px, .55fr);
+    gap: clamp(3rem, 8vw, 9rem);
+    align-items: end;
+}
+
+.essay-title-group h1 {
+    max-width: 13ch;
+}
+
+.essay-deck {
+    max-width: 42rem;
+}
+
+.essay-record {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem 0 0 clamp(1.5rem, 3vw, 3rem);
+    border-top: 3px solid var(--ink);
+    border-left: 1px solid rgb(33 29 25 / 22%);
+}
+
+.essay-record > .record-label {
+    margin: 0 0 1.5rem;
+}
+
+.essay-record-list {
+    margin: 0;
+}
+
+.essay-record-list > div {
+    display: grid;
+    grid-template-columns: minmax(78px, .7fr) minmax(0, 1.3fr);
+    gap: 1rem;
+    padding: .8rem 0;
+    border-bottom: 1px solid rgb(33 29 25 / 22%);
+}
+
+.essay-record-list dt,
+.essay-record-list dd {
+    font-family: var(--font-mono);
+    font-size: .74rem;
+    line-height: 1.45;
+}
+
+.essay-record-list dt {
+    color: var(--neutral-mid);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.essay-record-list dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.essay-classification {
+    background: var(--neutral-light);
+    border-bottom: 1px solid var(--ink);
+}
+
+.essay-classification-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 76px;
+}
+
+.essay-topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.essay-topic-list li {
+    padding: .4rem .7rem;
+    border: 1px solid rgb(33 29 25 / 35%);
+    font-family: var(--font-mono);
+    font-size: .7rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.essay-body-section .container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--reading-width)) minmax(0, 1fr);
+}
+
+.essay-reading-column {
+    grid-column: 2;
+}
+
+.essay-reading-column > p:first-child {
+    font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+    line-height: 1.58;
+}
+
+.essay-provenance-section {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--neutral-light);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+}
+
+.essay-provenance {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, .8fr);
+    gap: clamp(3rem, 8vw, 9rem);
+    align-items: start;
+}
+
+.essay-provenance h2 {
+    max-width: 12ch;
+    margin: 1rem 0 0;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: .95;
+    letter-spacing: -.035em;
+}
+
+.provenance-list {
+    margin: 0;
+    border-top: 3px solid var(--ink);
+}
+
+.provenance-list > div {
+    display: grid;
+    grid-template-columns: minmax(110px, .7fr) minmax(0, 1.3fr);
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgb(33 29 25 / 25%);
+}
+
+.provenance-list dt {
+    color: var(--neutral-mid);
+    font-family: var(--font-mono);
+    font-size: .7rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.provenance-list dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.essay-footer {
+    padding: clamp(2rem, 5vw, 4rem) 0;
+    background: var(--bone);
+    border-bottom: 1px solid var(--ink);
+}
+
+.essay-footer-inner {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.essay-footer-title {
+    margin: .75rem 0 0;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+}
+
+.essay-footer-routes {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+@media (max-width: 800px) {
+    .essay-header-grid,
+    .essay-provenance {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .essay-record {
+        padding-left: 0;
+        border-left: 0;
+    }
+
+    .essay-body-section .container {
+        display: block;
+    }
+
+    .essay-footer-inner {
+        display: grid;
+        align-items: start;
+    }
+}
+
+@media (max-width: 520px) {
+    .essay-record-list > div,
+    .provenance-list > div {
+        grid-template-columns: 1fr;
+        gap: .25rem;
+    }
+
+    .essay-classification-inner,
+    .essay-footer-routes {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+
+/* ============================================================
+   32. PRINT
+
+   Important for Zack:
+   essays should still look like useful documents if somebody
+   prints/saves them rather than like a broken website.
+   ============================================================ */
+
+@media print {
+
+    .essay-hero {
+        padding:
+            2rem
+            0;
+    }
+
+
+    .essay-hero::after {
+        display: none;
+    }
+
+
+    .essay-hero-inner {
+        display: block;
+    }
+
+
+    .essay-record-panel {
+        margin-top: 2rem;
+        padding-left: 0;
+    }
+
+
+    .essay-record-strip {
+        background: transparent;
+    }
+
+
+    .essay-body {
+        padding:
+            2rem
+            0;
+    }
+
+
+    .essay-body-inner,
+    .essay-layout {
+        display: block;
+    }
+
+
+    .essay-sidebar {
+        position: static;
+
+        margin-bottom: 2rem;
+    }
+
+
+    .essay-content,
+    .article-content {
+        max-width: none;
+    }
+
+
+    .essay-navigation,
+    .essay-return {
+        display: none;
+    }
+
+
+    .essay-content h2,
+    .article-content h2,
+    .essay-content h3,
+    .article-content h3 {
+        break-after: avoid;
+    }
+
+
+    .essay-content blockquote,
+    .article-content blockquote,
+    .evidence-note,
+    .field-note,
+    .article-note,
+    .correction-note,
+    figure,
+    table {
+        break-inside: avoid;
+    }
+
+}

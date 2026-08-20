@@ -1,0 +1,11 @@
+@import url("pages.css");
+
+.services-page {
+  --page-accent: #7692b3;
+  --page-soft: #dce5ef;
+  --page-deep: #273649;
+  --page-signal: #b0523e;
+}
+
+.services-page .record-section--accent { background: #9db3cc; }
+.services-page .service-band__number { color: #45698f; }

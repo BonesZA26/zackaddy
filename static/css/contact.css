@@ -1,0 +1,16 @@
+@import url("pages.css");
+
+.contact-page {
+  --page-accent: #d47b3f;
+  --page-soft: #f0d6bd;
+  --page-deep: #3b2b27;
+  --page-signal: #963f35;
+}
+
+.contact-page .record-hero::before { background: #e8b57d; }
+.contact-page .contact-route__value a { text-decoration-thickness: 2px; }
+.contact-page .record-hero .record-actions { margin-top: 1.5rem; }
+.contact-page .record-hero .button { font-weight: 600; }
+.contact-page .contact-route { padding: 1.35rem; border: 1px solid currentColor; background: rgb(255 255 255 / 42%); }
+.contact-page .contact-route + .contact-route { margin-top: 1rem; }
+.contact-page .contact-route__value { margin-top: 0.45rem; font-size: clamp(1.05rem, 2vw, 1.35rem); overflow-wrap: anywhere; }

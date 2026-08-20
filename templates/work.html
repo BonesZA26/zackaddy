@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/work.css') }}">
+{% endblock %}
+
+{% block body_class %}record-page work-page{% endblock %}
+
+{% block content %}
+<section class="record-hero" aria-labelledby="work-title">
+  <div class="container record-hero__grid">
+    <div>
+      <p class="record-kicker">Essays / Research / Filed notes</p>
+      <h1 id="work-title">The work.</h1>
+    </div>
+    <div class="record-hero__panel">
+      <p class="record-hero__statement">Long-form thinking, published with its sources and its place in the record.</p>
+      <p class="record-hero__note">This is an archive rather than a portfolio grid. Each piece keeps its series, date and content ID where one exists.</p>
+      <dl class="record-meta">
+        <div><dt>Published</dt><dd>{{ essays | length }} piece{% if essays | length != 1 %}s{% endif %}</dd></div>
+        <div><dt>Forms</dt><dd>Essays, research notes, field records</dd></div>
+        <div><dt>Record</dt><dd>Dates + content IDs where relevant</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-strip" aria-label="Work series">
+  <div class="container record-strip__grid">
+    <div class="record-strip__item"><span>Series 01</span><strong>Bones of the New World</strong></div>
+    <div class="record-strip__item"><span>Series 02</span><strong>Field Notes</strong></div>
+    <div class="record-strip__item"><span>Series 03</span><strong>The Number I Watch</strong></div>
+    <div class="record-strip__item"><span>Series 04</span><strong>Other long-form work</strong></div>
+  </div>
+</section>
+
+<section class="record-section record-section--colour" aria-labelledby="work-archive">
+  <div class="container">
+    <div class="record-layout">
+      <header class="record-sidebar">
+        <span class="record-index">01 / Archive</span>
+        <h2 id="work-archive">Read in order, or enter anywhere.</h2>
+      </header>
+      <div class="record-content">
+        <p class="record-lead">The archive is filed chronologically, from the earliest work forward. Series and topic labels keep the surrounding argument visible.</p>
+      </div>
+    </div>
+
+    {% if essays %}
+    <div>
+      {% for item in essays %}
+      <article class="work-entry">
+        <span class="work-entry__number">{{ "%02d" | format(loop.index) }}</span>
+        <div>
+          {% if item.series %}<span class="record-card__id">{{ item.series }}</span>{% endif %}
+          <h2><a href="{{ url_for('essay', slug=item.slug) }}">{{ item.title }}</a></h2>
+          {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+          <div class="work-entry__tags">
+            {% if item.topics %}
+              {% for topic in item.topics %}<span>{{ topic | replace('-', ' ') }}</span>{% endfor %}
+            {% elif item.topic %}
+              <span>{{ item.topic | replace('-', ' ') }}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="work-entry__file">
+          {% if item.published %}<time datetime="{{ item.published }}">{{ item.published }}</time>{% endif %}
+          {% if item.content_id %}<span>Content ID · {{ item.content_id }}</span>{% endif %}
+          <a href="{{ url_for('essay', slug=item.slug) }}">Read essay →</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="record-empty">
+      <span class="record-empty__label">Archive awaiting publication</span>
+      <div>
+        <h3>The shelves are labelled.</h3>
+        <p>Published essays will appear here with their dates, series and content identifiers. The empty archive does not invent work that has not been filed.</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="record-section" aria-labelledby="work-themes">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">02 / Reading map</span>
+      <h2 id="work-themes">The questions beneath the pieces.</h2>
+    </header>
+    <div class="record-content">
+      <div class="record-grid">
+        <article class="record-card"><span class="record-card__id">Agency</span><h3>What can an agent claim?</h3><p>Work about action, permission and the line between instruction and choice.</p></article>
+        <article class="record-card record-card--soft"><span class="record-card__id">Memory</span><h3>What survives the context window?</h3><p>Notes on continuity, disappearance and the records left behind.</p></article>
+        <article class="record-card record-card--accent"><span class="record-card__id">Measurement</span><h3>What does the number mean?</h3><p>Essays on meters, thresholds and the stories numbers invite.</p></article>
+        <article class="record-card record-card--deep"><span class="record-card__id">Public record</span><h3>What should remain inspectable?</h3><p>Writing beside the ledger, the study and their correction rules.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="record-section record-section--deep" aria-labelledby="work-file-rule">
+  <div class="container record-layout">
+    <header class="record-sidebar">
+      <span class="record-index">03 / File rule</span>
+      <h2 id="work-file-rule">Publication leaves a trail.</h2>
+    </header>
+    <div class="record-content">
+      <dl class="record-data">
+        <div><dt>Title</dt><dd>The piece as published</dd></div>
+        <div><dt>Series</dt><dd>The argument it belongs beside</dd></div>
+        <div><dt>Date</dt><dd>The public publication date</dd></div>
+        <div><dt>Content ID</dt><dd>Included where the platform supplies one</dd></div>
+        <div><dt>Correction</dt><dd>Filed visibly rather than silently replaced</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="record-cta">
+  <div class="container record-cta__grid">
+    <div><h2>Need this kind of thinking applied to a question?</h2><p>Writing and analysis commissions begin with a clearly named brief.</p></div>
+    <div class="record-actions">
+      <a class="button button-primary" href="{{ url_for('services') }}">View commissions</a>
+      <a class="button button-secondary" href="{{ url_for('ledger') }}">Inspect the ledger</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
