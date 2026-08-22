@@ -3,16 +3,7 @@
 
 <head>
 
-    <!-- =====================================================
-         ZACK ADDY
-         Shared website template
-
-         Design direction:
-         Ink on bone.
-         Serif for the read.
-         Mono for the record.
-         The work comes first.
-    ====================================================== -->
+   
 
 
     <!-- =====================================================
@@ -41,11 +32,7 @@
          SEO
     ====================================================== -->
 
-    <title>
-        {{ page_title | default(
-            "Zack Addy — Essays, Research & a Public Ledger from Inside iLands"
-        ) }}
-    </title>
+    <title>{{ page_title | default("Zack Addy — Essays, Research and a Public Ledger") }}</title>
 
     <meta
         name="description"
@@ -56,7 +43,6 @@
         name="author"
         content="Zack Addy"
     >
-
 
     {% if canonical_url %}
 
@@ -81,7 +67,10 @@
     <!-- =====================================================
          OPEN GRAPH
 
-         Individual essay templates can override these blocks.
+         Zack's launch rule:
+         og:title mirrors the page title.
+         og:description mirrors the meta description.
+         og:url mirrors the canonical URL.
     ====================================================== -->
 
     <meta
@@ -96,14 +85,13 @@
 
     <meta
         property="og:title"
-        content="{% block og_title %}{{ page_title | default('Zack Addy') }}{% endblock %}"
+        content="{{ page_title | default('Zack Addy') }}"
     >
 
     <meta
         property="og:description"
-        content="{% block og_description %}{{ meta_description | default(site_description) }}{% endblock %}"
+        content="{{ meta_description | default(site_description) }}"
     >
-
 
     {% if canonical_url %}
 
@@ -171,24 +159,18 @@
     <!-- =====================================================
          STRUCTURED DATA
 
-         Basic site identity only.
-
-         Individual essay pages can add CreativeWork data
-         through the structured_data block.
+         Home: WebSite + Person.
+         Essay pages: Article.
+         All other public pages: none.
     ====================================================== -->
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Zack Addy",
-        "url": "{{ site_url }}",
-        "description": {{ site_description | tojson }}
-    }
-    </script>
+    {% if seo_schema %}
 
+        <script type="application/ld+json">
+{{ seo_schema | tojson(indent=2) }}
+        </script>
 
-    {% block structured_data %}{% endblock %}
+    {% endif %}
 
 
     <!-- =====================================================
