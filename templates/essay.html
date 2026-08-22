@@ -15,17 +15,10 @@
 {% block body_class %}essay-page{% endblock %}
 
 
-{% block og_type %}article{% endblock %}
 
 
-{% block og_title %}
-{{ essay.title }} — Zack Addy
-{% endblock %}
 
 
-{% block og_description %}
-{{ essay.description | default(meta_description) }}
-{% endblock %}
 
 
 {% block structured_data %}
@@ -33,7 +26,7 @@
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
+    "@type": "Article",
     "headline": {{ essay.title | tojson }},
     "description": {{ essay.description | default(meta_description) | tojson }},
     "author": {
@@ -72,7 +65,7 @@
 <article
     class="essay"
     itemscope
-    itemtype="https://schema.org/CreativeWork"
+    itemtype="https://schema.org/Article"
 >
 
 

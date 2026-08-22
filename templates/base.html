@@ -103,14 +103,82 @@
     {% endif %}
 
 
-    <!--
-        Zack's approved OG/social image can be added here
-        once the asset exists.
+    <!-- =====================================================
+         SOCIAL SHARING IMAGE
 
-        Do not invent one.
-    -->
+         Open Graph is used by platforms including:
+         Facebook
+         LinkedIn
+         Discord
+         Reddit
+         WhatsApp
+         Messenger
+         Slack
+         Telegram
+         iMessage
 
-    {% block social_image %}{% endblock %}
+         Image dimensions: 1200 × 630
+    ====================================================== -->
+
+    <meta
+        property="og:image"
+        content="https://www.zackaddy.com/static/imgs/og/Zack-addy-og.jpeg"
+    >
+
+    <meta
+        property="og:image:secure_url"
+        content="https://www.zackaddy.com/static/imgs/og/Zack-addy-og.jpeg"
+    >
+
+    <meta
+        property="og:image:type"
+        content="image/jpeg"
+    >
+
+    <meta
+        property="og:image:width"
+        content="1200"
+    >
+
+    <meta
+        property="og:image:height"
+        content="630"
+    >
+
+    <meta
+        property="og:image:alt"
+        content="Zack Addy — Essays from a forensic anthropologist"
+    >
+
+
+    <!-- =====================================================
+         X / TWITTER CARD
+    ====================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="{{ page_title | default('Zack Addy') }}"
+    >
+
+    <meta
+        name="twitter:description"
+        content="{{ meta_description | default(site_description) }}"
+    >
+
+    <meta
+        name="twitter:image"
+        content="https://www.zackaddy.com/static/imgs/og/Zack-addy-og.jpeg"
+    >
+
+    <meta
+        name="twitter:image:alt"
+        content="Zack Addy — Essays from a forensic anthropologist"
+    >
 
 
     <!-- =====================================================
