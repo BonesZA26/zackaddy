@@ -1,0 +1,30 @@
+{% extends 'admin/base.html' %}{% block title %}Recovery codes{% endblock %}{% block content %}
+<section class="admin-panel admin-narrow">
+<p class="eyebrow">Credential recovery</p>
+<h1>One-time recovery codes.</h1>
+
+{% if new_codes %}
+<p><strong>Save these now.</strong> These plaintext values are shown once. The server stores only hashes and cannot show this set again.</p>
+<p>Generating another set will revoke every code below.</p>
+<textarea readonly rows="10" aria-label="Recovery codes">{% for code in new_codes %}{{ code }}
+{% endfor %}</textarea>
+<p>{{ available_count }} unused recovery codes are active.</p>
+<a class="button button-primary" href="{{ url_for('admin_dashboard') }}">I have stored them safely</a>
+{% else %}
+<p>{{ available_count }} unused recovery codes are currently active.</p>
+<p>Generate a new set of 10 codes. This immediately revokes every previous recovery code, including unused ones.</p>
+<form method="post" autocomplete="off">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label>Current password
+<input type="password" name="current_password" required autocomplete="current-password">
+</label>
+<label>
+<input type="checkbox" name="confirm_replace" value="yes" required>
+I understand that generating a new set revokes the old set.
+</label>
+<button class="button button-primary" type="submit">Generate new recovery codes</button>
+<a class="button button-secondary" href="{{ url_for('admin_change_password') }}">Back to password & access</a>
+</form>
+{% endif %}
+</section>
+{% endblock %}

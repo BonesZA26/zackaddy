@@ -1,0 +1,25 @@
+{% extends 'admin/base.html' %}{% block title %}Recover access{% endblock %}{% block content %}
+<section class="admin-panel admin-narrow">
+<p class="eyebrow">Private administration</p>
+<h1>Recover access.</h1>
+<p>Use one unused recovery code to choose a new admin password. A successful recovery burns that code and signs out every previous admin session.</p>
+<form method="post" autocomplete="off">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label>Username
+<input name="username" required maxlength="80" autocomplete="username">
+</label>
+<label>Recovery code
+<input name="recovery_code" required maxlength="40" autocapitalize="characters" spellcheck="false" autocomplete="off">
+</label>
+<label>New password
+<input type="password" name="new_password" required minlength="14" maxlength="200" autocomplete="new-password" aria-describedby="recovery-password-rules">
+</label>
+<label>Confirm new password
+<input type="password" name="confirm_password" required minlength="14" maxlength="200" autocomplete="new-password">
+</label>
+<p id="recovery-password-rules">Use at least 14 characters with uppercase and lowercase letters, a number and a symbol. Do not include the admin username.</p>
+<button class="button button-primary" type="submit">Use recovery code and reset password</button>
+<a class="button button-secondary" href="{{ url_for('admin_login') }}">Back to sign in</a>
+</form>
+</section>
+{% endblock %}

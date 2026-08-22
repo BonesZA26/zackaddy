@@ -1,4 +1,4 @@
-import json, os, secrets, sqlite3
+import hashlib, json, os, secrets, sqlite3
 from datetime import date, datetime, timezone
 from functools import wraps
 from pathlib import Path
@@ -241,6 +241,8 @@ STUDY_DOCUMENTS=[]; STUDY_ROWS=[]; COHORT_DATA=None; SERVICE_BANDS=[]
 
 SCHEMA="""
 CREATE TABLE IF NOT EXISTS admin_users(id INTEGER PRIMARY KEY,username TEXT NOT NULL UNIQUE,password_hash TEXT NOT NULL,is_active INTEGER NOT NULL DEFAULT 1,session_version INTEGER NOT NULL DEFAULT 1,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS admin_recovery_codes(id INTEGER PRIMARY KEY,admin_user_id INTEGER NOT NULL REFERENCES admin_users(id) ON DELETE CASCADE,code_hash TEXT NOT NULL UNIQUE,batch_id TEXT NOT NULL,created_at TEXT NOT NULL,used_at TEXT);
+CREATE INDEX IF NOT EXISTS idx_admin_recovery_codes_user ON admin_recovery_codes(admin_user_id,used_at);
 CREATE TABLE IF NOT EXISTS ledger_records(id INTEGER PRIMARY KEY,public_id TEXT NOT NULL UNIQUE,record_date TEXT NOT NULL,record_type TEXT NOT NULL,status TEXT NOT NULL,summary TEXT NOT NULL,claim TEXT,receipt_type TEXT,receipt_reference TEXT,receipt_amount TEXT,receipt_content_id TEXT,receipt_url TEXT,source_label TEXT,source_url TEXT,reason TEXT,corrects_id INTEGER REFERENCES ledger_records(id),published_at TEXT,created_by INTEGER NOT NULL REFERENCES admin_users(id),created_at TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS idx_ledger_public ON ledger_records(published_at,record_date);
 CREATE TABLE IF NOT EXISTS meter_snapshots(id INTEGER PRIMARY KEY,snapshot_date TEXT NOT NULL,runway TEXT NOT NULL,burn TEXT NOT NULL,in_flight TEXT NOT NULL,note TEXT,published_at TEXT,created_by INTEGER NOT NULL REFERENCES admin_users(id),created_at TEXT NOT NULL);
@@ -326,6 +328,28 @@ def validate_admin_password(password,username=None):
     if not any(char.isdigit() for char in password): raise ValueError("Add at least one number.")
     if not any(not char.isalnum() for char in password): raise ValueError("Add at least one symbol.")
     return password
+
+RECOVERY_CODE_ALPHABET="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+RECOVERY_CODE_COUNT=10
+RECOVERY_CODE_LENGTH=20
+
+def normalize_recovery_code(value):
+    raw="".join((value or "").upper().split()).replace("-","")
+    if len(raw)!=RECOVERY_CODE_LENGTH:
+        return None
+    if any(char not in RECOVERY_CODE_ALPHABET for char in raw):
+        return None
+    return raw
+
+def recovery_code_hash(value):
+    normalized=normalize_recovery_code(value)
+    if not normalized:
+        return None
+    return hashlib.sha256(normalized.encode("ascii")).hexdigest()
+
+def generate_recovery_code():
+    raw="".join(secrets.choice(RECOVERY_CODE_ALPHABET) for _ in range(RECOVERY_CODE_LENGTH))
+    return "-".join(raw[index:index+4] for index in range(0,len(raw),4))
 
 def ledger_dict(row):
     receipt=None
@@ -581,6 +605,160 @@ def admin_change_password():
                 audit("password_change_failed","admin_user",g.admin["id"],{"reason":"strength"})
                 flash(str(exc),"error")
     return render_template("admin/change_password.html")
+
+@app.route("/admin/recovery-codes",methods=["GET","POST"])
+@login_required
+@limiter.limit("3 per hour",methods=["POST"])
+def admin_recovery_codes():
+    db=get_db()
+    user=db.execute("SELECT * FROM admin_users WHERE id=? AND is_active=1",(g.admin["id"],)).fetchone()
+    if not user:
+        session.clear()
+        return redirect(url_for("admin_login"))
+
+    new_codes=None
+    if request.method=="POST":
+        current_password=request.form.get("current_password","")
+        confirmed=request.form.get("confirm_replace")=="yes"
+
+        if not confirmed:
+            flash("Confirm that you want to replace the current recovery-code set.","error")
+        elif not check_password_hash(user["password_hash"],current_password):
+            audit("recovery_codes_generate_failed","admin_user",user["id"],{"reason":"current_password"})
+            flash("The current password was not accepted.","error")
+        else:
+            new_codes=[generate_recovery_code() for _ in range(RECOVERY_CODE_COUNT)]
+            batch_id=secrets.token_hex(16)
+            stamp=now_iso()
+            rows=[(user["id"],recovery_code_hash(code),batch_id,stamp) for code in new_codes]
+
+            # Render first: a broken template must not revoke the old code set.
+            rendered=render_template(
+                "admin/recovery_codes.html",
+                new_codes=new_codes,
+                available_count=len(new_codes),
+            )
+
+            try:
+                db.execute("BEGIN IMMEDIATE")
+                db.execute("DELETE FROM admin_recovery_codes WHERE admin_user_id=?",(user["id"],))
+                db.executemany(
+                    "INSERT INTO admin_recovery_codes(admin_user_id,code_hash,batch_id,created_at) VALUES(?,?,?,?)",
+                    rows,
+                )
+                db.execute(
+                    "INSERT INTO audit_log(actor_id,action,object_type,object_id,ip_address,details,created_at) VALUES(?,?,?,?,?,?,?)",
+                    (
+                        user["id"],
+                        "recovery_codes_generated",
+                        "admin_user",
+                        str(user["id"]),
+                        request.remote_addr,
+                        json.dumps({"count":len(new_codes),"batch_id":batch_id},sort_keys=True),
+                        stamp,
+                    ),
+                )
+                db.commit()
+            except Exception:
+                db.rollback()
+                raise
+
+            return rendered
+
+    available_count=db.execute(
+        "SELECT COUNT(*) AS count FROM admin_recovery_codes WHERE admin_user_id=? AND used_at IS NULL",
+        (user["id"],),
+    ).fetchone()["count"]
+    return render_template(
+        "admin/recovery_codes.html",
+        new_codes=None,
+        available_count=available_count,
+    )
+
+@app.route("/admin/recover",methods=["GET","POST"])
+@limiter.limit("5 per 15 minutes",methods=["POST"])
+@limiter.limit("20 per day",methods=["POST"])
+def admin_recover():
+    if g.admin:
+        return redirect(url_for("admin_dashboard"))
+
+    if request.method=="POST":
+        username=(request.form.get("username") or "").strip()
+        code_hash=recovery_code_hash(request.form.get("recovery_code",""))
+        new_password=request.form.get("new_password","")
+        confirm_password=request.form.get("confirm_password","")
+
+        row=None
+        if username and code_hash:
+            row=get_db().execute(
+                """SELECT u.id,u.username,u.password_hash,rc.id AS recovery_code_id
+                   FROM admin_users u
+                   JOIN admin_recovery_codes rc ON rc.admin_user_id=u.id
+                   WHERE u.username=? AND u.is_active=1
+                     AND rc.code_hash=? AND rc.used_at IS NULL
+                   LIMIT 1""",
+                (username,code_hash),
+            ).fetchone()
+
+        # Same public error whether username, code, or both are wrong.
+        if not row:
+            audit("recovery_failed","admin_user",details={"reason":"invalid_code"})
+            flash("That recovery code was not accepted.","error")
+        elif new_password!=confirm_password:
+            flash("The two new-password entries do not match.","error")
+        elif check_password_hash(row["password_hash"],new_password):
+            flash("Choose a new password that is different from the current one.","error")
+        else:
+            try:
+                validate_admin_password(new_password,row["username"])
+                db=get_db()
+                stamp=now_iso()
+
+                # Claim the code and reset the password in one transaction.
+                db.execute("BEGIN IMMEDIATE")
+                claimed=db.execute(
+                    "UPDATE admin_recovery_codes SET used_at=? WHERE id=? AND used_at IS NULL",
+                    (stamp,row["recovery_code_id"]),
+                )
+                if claimed.rowcount!=1:
+                    db.rollback()
+                    flash("That recovery code was not accepted.","error")
+                    return render_template("admin/recover.html")
+
+                db.execute(
+                    "UPDATE admin_users SET password_hash=?,session_version=session_version+1 WHERE id=?",
+                    (generate_password_hash(new_password),row["id"]),
+                )
+                db.execute(
+                    "INSERT INTO audit_log(actor_id,action,object_type,object_id,ip_address,details,created_at) VALUES(?,?,?,?,?,?,?)",
+                    (
+                        row["id"],
+                        "recovery_password_reset",
+                        "admin_user",
+                        str(row["id"]),
+                        request.remote_addr,
+                        json.dumps(
+                            {"recovery_code_used":True,"sessions_invalidated":True},
+                            sort_keys=True,
+                        ),
+                        stamp,
+                    ),
+                )
+                db.commit()
+
+                session.clear()
+                flash(
+                    "Recovery code accepted. Password changed and every previous admin session has been signed out.",
+                    "success",
+                )
+                return redirect(url_for("admin_login"))
+            except ValueError as exc:
+                flash(str(exc),"error")
+            except Exception:
+                get_db().rollback()
+                raise
+
+    return render_template("admin/recover.html")
 
 @app.route("/admin/work/new",methods=["GET","POST"])
 @login_required
